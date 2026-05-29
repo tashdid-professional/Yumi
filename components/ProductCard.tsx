@@ -66,13 +66,13 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Quick View Button on Hover - Top Right with Sliding Animation */}
-            <div className="absolute top-4 right-4 translate-x-4 opacity-0 group-hover/image:translate-x-0 group-hover/image:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 hidden md:block">
+            <div className="absolute top-4 right-4 translate-x-4 opacity-0 group-hover/image:translate-x-0 group-hover/image:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 hidden md:block ">
               <button
                 onClick={openQuickView}
-                className="w-10 h-10 bg-white flex items-center justify-center text-black shadow-sm hover:bg-black hover:text-white transition-all duration-300 border border-neutral-100 "
+                className="w-11 h-11 bg-white flex items-center justify-center text-black shadow-sm hover:bg-black hover:text-white transition-all duration-300  rounded-full "
                 title="Quick View"
               >
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="23" height="23" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
                 </svg>
               </button>
@@ -83,10 +83,10 @@ export default function ProductCard({ product }: ProductCardProps) {
             <div className="absolute bottom-4 right-4 md:hidden z-20">
               <button
                 onClick={openQuickView}
-                className="w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black shadow-md border border-neutral-200 rounded-full"
+                className="w-11 h-11 bg-white/90 backdrop-blur-sm flex items-center justify-center text-black shadow-md border border-neutral-200 rounded-full"
                 title="Quick View"
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/>
                 </svg>
               </button>
@@ -96,22 +96,20 @@ export default function ProductCard({ product }: ProductCardProps) {
 
           {/* Content */}
           <div className="space-y-1.5 px-1">
-            <p className="text-[10px] font-medium tracking-[0.1em] text-[#ef4626] uppercase">
-              {product.category}
-            </p>
-            <h3 className="text-[14px] font-semibold text-black leading-tight group-hover:text-black/70 transition-colors">
-              {product.name}
-            </h3>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center justify-center gap-2">
               {product.oldPrice && (
-                <span className="text-[14px] text-gray-400 line-through">
-                  ${product.oldPrice.toFixed(2)}
+                <span className=" text-gray-400 font-semibold line-through">
+                  <span className="font-serif text-sm">৳</span> {product.oldPrice.toFixed(2)}
                 </span>
               )}
-              <span className={`text-[14px] font-medium ${product.oldPrice ? 'text-black' : 'text-gray-900'}`}>
-                ${product.price.toFixed(2)}
+              <span className={` font-semibold ${product.oldPrice ? 'text-black' : 'text-gray-900'}`}>
+                <span className="font-serif text-sm">৳</span> {product.price.toFixed(2)}
               </span>
             </div>
+            
+            <h3 className="text-[15px] font-semibold text-black leading-tight  transition-colors text-center">
+              {product.name}
+            </h3>
           </div>
         </Link>
       </div>
@@ -154,11 +152,11 @@ export default function ProductCard({ product }: ProductCardProps) {
                 <div className="flex items-center gap-3 mb-4 md:mb-6">
                   {product.oldPrice && (
                     <span className="text-lg md:text-xl text-gray-400 line-through font-dm-sans">
-                      £{product.oldPrice.toFixed(2)}
+                      <span className="font-serif ">৳ </span>{product.oldPrice.toFixed(2)}
                     </span>
                   )}
                   <span className="text-xl md:text-2xl text-[#1a1a1a] font-dm-sans">
-                    £{product.price.toFixed(2)}
+                    <span className="font-serif  ">৳ </span>{product.price.toFixed(2)}
                   </span>
                 </div>
                 <div className="w-12 h-px bg-[#d4b1a4] mb-4 md:mb-6" />

@@ -1,3 +1,19 @@
+export const siteConfig = {
+  name: "yumi",
+  topBanner: "Free shipping on all U.S. orders $50+",
+  navLinks: [
+    { name: "Home", href: "/" },
+    { name: "Shop", href: "/shop" },
+    
+    { name: "About", href: "/about" },
+    { name: "Contact", href: "/contact" },
+  ],
+  featuredProducts: {
+    title: "Our Featured Products",
+    subtitle: "Get the skin you want to feel"
+  }
+};
+
 export interface HeroSlide {
   id: number;
   subtitle: string;

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, useRef } from "react";
 import { products } from "@/public/datas/products";
+import { siteConfig } from "@/public/datas/homepage";
 import ProductCard from "./ProductCard";
 
 export default function FeaturedProducts() {
@@ -46,10 +47,10 @@ export default function FeaturedProducts() {
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
           <h2 className="text-3xl md:text-[40px] font-semibold text-black mb-4">
-            Our Featured Products
+            {siteConfig.featuredProducts.title}
           </h2>
           <p className="text-[#7e7e7e] text-sm md:text-[18px] font-medium">
-            Get the skin you want to feel
+            {siteConfig.featuredProducts.subtitle}
           </p>
         </div>
 

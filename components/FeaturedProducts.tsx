@@ -41,20 +41,20 @@ export default function FeaturedProducts() {
   }, [totalProducts, visibleItems]);
 
   return (
-    <section className="py-20 md:py-28 bg-white overflow-hidden">
-      <div className="container mx-auto px-4 lg:px-12 text-center">
+    <section className="py-20 md:py-28 bg-white  container">
+      <div className="  text-center">
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
-          <h2 className="text-3xl md:text-4xl font-medium text-black mb-4">
+          <h2 className="text-3xl md:text-[40px] font-semibold text-black mb-4">
             Our Featured Products
           </h2>
-          <p className="text-gray-500 text-sm md:text-base">
+          <p className="text-[#7e7e7e] text-sm md:text-[18px] font-medium">
             Get the skin you want to feel
           </p>
         </div>
 
         {/* Products Slider */}
-        <div className="relative mx-auto max-w-[1400px] overflow-hidden">
+        <div className="relative -mx-4 overflow-hidden">
           <div 
             className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
             style={{ 

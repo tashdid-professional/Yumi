@@ -27,21 +27,21 @@ const BannerSection = () => {
             {/* Content Container */}
             <div className="relative z-10 w-full md:w-[75%] p-8 md:p-14">
               {banner.subtitle && (
-                <span className="block text-[12px] md:text-[14px] font-bold tracking-[0.2em] text-gray-800 uppercase mb-4 drop-shadow-sm">
+                <span className="block text-[12px] md:text-[15px] font-semibold tracking-[1.5px] uppercase mb-4 drop-shadow-sm">
                   {banner.subtitle}
                 </span>
               )}
-              <h2 className="text-3xl md:text-5xl font-medium leading-tight mb-8 text-gray-900 drop-shadow-md">
+              <h2 className="text-3xl md:text-[34px] font-semibold leading-tight mb-8  drop-shadow-md">
                 {banner.title}
               </h2>
               {banner.description && (
-                <p className="text-sm md:text-lg text-gray-700 mb-10 max-w-[340px] leading-relaxed font-medium">
+                <p className="text-sm md:text-lg mb-10 max-w-[340px] leading-relaxed font-medium">
                   {banner.description}
                 </p>
               )}
               <Link
                 href={banner.buttonLink}
-                className="inline-block bg-white text-black px-8 py-3.5 text-[14px] font-bold tracking-widest uppercase hover:bg-black hover:text-white transition-all duration-300 shadow-lg"
+                className="inline-block bg-white text-black px-8 py-3.5 text-[16px] font-semibold  hover:bg-black hover:text-white transition-all duration-300 shadow-lg"
               >
                 {banner.buttonText}
               </Link>

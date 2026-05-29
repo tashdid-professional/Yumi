@@ -11,27 +11,27 @@ export default function Navbar() {
     <header className="relative w-full">
       {/* Top Banner - Only on Homepage, Not Sticky */}
       {isHome && (
-        <div className="bg-[#4b6c5b] text-white py-2.5 text-center text-[10px] sm:text-xs tracking-[0.2em] font-medium uppercase">
+        <div className="bg-[#4b6c5b] text-white py-2 text-center text-[10px] sm:text-base font-medium ">
           Free shipping on all U.S. orders $50+
         </div>
       )}
 
       {/* Main Navbar - Sticky */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
-        <div className="container mx-auto px-4 lg:px-8 py-5 md:py-7 flex items-center justify-between">
+        <div className="container mx-auto  py-5 md:py-4 flex items-center justify-between">
           {/* Left: Navigation Menu */}
           <div className="hidden md:flex flex-1 gap-8 lg:gap-12">
             {[
               { name: "Home", href: "/" },
               { name: "Shop", href: "/shop" },
-              { name: "Blog", href: "/blog" },
+              
               { name: "About", href: "/about" },
               { name: "Contact", href: "/contact" },
             ].map((link) => (
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-[12px] font-bold tracking-[0.2em] uppercase transition-colors hover:text-gray-500 relative py-1 ${
+                className={`text-[14px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-gray-500 relative py-1 ${
                   pathname === link.href ? "after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-black" : ""
                 }`}
               >
@@ -42,8 +42,8 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <div className="flex-1 md:flex-none text-center">
-            <Link href="/" className="text-2xl md:text-3xl font-bold tracking-[0.3em] uppercase inline-block">
-              GLOWING
+            <Link href="/" className="text-2xl md:text-[42px] font-semibold  uppercase inline-block">
+              yumi
             </Link>
           </div>
 

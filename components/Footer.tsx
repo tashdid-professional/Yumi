@@ -13,7 +13,7 @@ const Footer = () => {
 
       <div className="container">
         {/* Top Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16 md:mb-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-0 gap-12 mb-16 md:mb-20">
           {/* Company */}
           <div className="space-y-6">
             <h4 className="text-[18px] font-bold text-gray-900">{footerData.company.title}</h4>

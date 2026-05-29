@@ -37,22 +37,22 @@ export default function HeroBanner() {
           />
           
           <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-4 lg:px-12">
-              <div className={`max-w-xl transition-all duration-1000 ${
+            <div className="container ">
+              <div className={`max-w-md transition-all duration-1000 ${
                 index === currentSlide ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
               }`}>
-                <span className="block text-[12px] md:text-[14px] font-bold tracking-[0.2em] text-gray-800 uppercase mb-4">
+                <span className="block text-[12px] md:text-[15px] font-semibold tracking-[0.2em]  uppercase mb-4">
                   {slide.subtitle}
                 </span>
-                <h1 className="text-4xl md:text-6xl lg:text-7xl font-medium text-gray-900 leading-tight mb-6">
+                <h1 className="text-4xl md:text-6xl lg:text-[56px] font-semibold leading-tight mb-6">
                   {slide.title}
                 </h1>
-                <p className="text-sm md:text-lg text-gray-600 mb-10 max-w-[320px] md:max-w-md">
+                <p className="text-sm md:text-lg text-[#7e7e7e] mb-10 max-w-[320px] md:max-w-md">
                   {slide.description}
                 </p>
                 <Link
                   href={slide.buttonLink}
-                  className="inline-block bg-black text-white px-10 py-4 text-xs md:text-sm font-bold uppercase tracking-[0.2em] hover:bg-gray-800 transition-colors"
+                  className="inline-block bg-black text-white px-10 py-4 text-xs md:text-base font-semibold hover:bg-gray-800 transition-colors"
                 >
                   {slide.buttonText}
                 </Link>

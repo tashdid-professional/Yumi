@@ -129,7 +129,7 @@ export default function BlogDetailPage() {
             {relatedPosts.map((rPost) => (
               <Link key={rPost.id} href={`/blog/${rPost.slug}`} className="group cursor-pointer">
                 <article>
-                  <div className="relative aspect-square mb-6 overflow-hidden bg-neutral-100">
+                  <div className="relative aspect-16/9 mb-6 overflow-hidden bg-neutral-100">
                     <Image
                       src={rPost.image}
                       alt={rPost.title}

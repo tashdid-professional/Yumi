@@ -68,7 +68,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             </div>
 
             {/* Quick View Button on Hover - Top Right with Sliding Animation */}
-            <div className="absolute top-4 right-4 translate-x-4 opacity-0 group-hover/image:translate-x-0 group-hover/image:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 hidden md:block ">
+            <div className="absolute bottom-4 center-0 translate-y-4 opacity-0 group-hover/image:translate-y-0 group-hover/image:opacity-100 transition-all duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] z-20 hidden md:block ">
               <button
                 onClick={openQuickView}
                 className="w-11 h-11 bg-white flex items-center justify-center text-black shadow-sm hover:bg-black hover:text-white transition-all duration-300  rounded-full "

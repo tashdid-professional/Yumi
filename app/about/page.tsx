@@ -9,13 +9,13 @@ export default function AboutPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[500px] md:h-[750px] flex items-center overflow-hidden bg-white">
-        <div className="container relative z-10">
+      <section className="relative h-[500px] md:h-[550px] flex items-center overflow-hidden bg-white">
+        <div className="container relative z-10 lg:pl-30">
           <div className="max-w-2xl">
-             <span className="text-[12px] font-bold uppercase tracking-[0.5em] text-black mb-8 block opacity-80">
+             <span className="text-[15px] font-semibold uppercase tracking-[1.5px] text-black mb-8 block opacity-80">
                 {aboutData.hero.subtitle}
              </span>
-             <h1 className="text-5xl md:text-[80px] font-medium text-black leading-[1.1] tracking-tight">
+             <h1 className="text-5xl md:text-[56px] font-semibold text-black leading-[1.1] tracking-tight">
                 {aboutData.hero.title}
              </h1>
           </div>
@@ -32,8 +32,8 @@ export default function AboutPage() {
       </section>
 
       {/* Mission Statement */}
-      <section className="py-32 md:py-52 container text-center">
-         <div className="max-w-4xl mx-auto space-y-12 md:space-y-16">
+      <section className="py-32 md:py-42 container text-center">
+         <div className="max-w-4xl mx-auto md:space-y-10">
             <div className="flex justify-center">
                {/* 3-Leaf Organic Icon */}
                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -42,11 +42,11 @@ export default function AboutPage() {
                   <path d="M42 25C42 25 48 33 48 40C48 45 45 48 42 48C39 48 36 45 36 40C36 33 42 25 42 25Z" fill="#A8BCA1" opacity="0.5"/>
                </svg>
             </div>
-            <h2 className="text-3xl md:text-[54px] font-medium text-black leading-[1.2] max-w-3xl mx-auto px-4">
+            <h2 className="text-3xl md:text-[34px] font-semibold text-black leading-[1.2] max-w-xl mx-auto px-4">
                {aboutData.missionStatement.title}
             </h2>
-            <div className="max-w-xl mx-auto">
-              <p className="text-neutral-500 text-[15px] md:text-[17px] leading-relaxed px-4 md:px-0 opacity-90">
+            <div className="max-w-2xl mx-auto">
+              <p className="text-[#7e7e7e] font-medium text-[15px] md:text-[17px] leading-relaxed px-4 md:px-0 opacity-90">
                  {aboutData.missionStatement.description}
               </p>
             </div>
@@ -54,11 +54,11 @@ export default function AboutPage() {
       </section>
 
       {/* Grid Sections */}
-      <section className="pb-24 md:pb-44 space-y-32 md:space-y-48">
+      <section className="pb-24 md:pb-44 space-y-20  lg:pl-30">
          {aboutData.sections.map((section) => (
             <div key={section.id} className="container">
-               <div className={`flex flex-col md:flex-row items-center gap-12 md:gap-32`}>
-                  <div className={`relative aspect-[1/1] w-full md:w-1/2 overflow-hidden ${section.imagePosition === 'right' ? 'md:order-2' : 'md:order-1'}`}>
+               <div className={`flex flex-col md:flex-row items-center gap-12 `}>
+                  <div className={`relative aspect-[5/4] w-full md:w-1/2 overflow-hidden ${section.imagePosition === 'right' ? 'md:order-2' : 'md:order-1'}`}>
                      <Image
                        src={section.image}
                        alt={section.title}

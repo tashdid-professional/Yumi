@@ -12,22 +12,22 @@ export default function ContactPage() {
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
           <span className="text-neutral-300">—</span>
-          <span className="text-black font-medium">Contact Us 01</span>
+          <span className="text-black font-medium">Contact Us</span>
         </div>
       </div>
 
       {/* Keep In Touch Section */}
-      <section className="py-20 md:py-32 container text-center">
-        <div className="max-w-3xl mx-auto mb-20 md:mb-28">
-          <h1 className="text-3xl md:text-5xl font-medium text-black mb-8">
+      <section className="py-20 md:py-26 container text-center">
+        <div className="max-w-3xl mx-auto mb-10 ">
+          <h1 className="text-3xl md:text-[40px] font-semibold text-black mb-8">
             {contactData.header.title}
           </h1>
-          <p className="text-neutral-500 text-sm md:text-base leading-relaxed max-w-xl mx-auto">
+          <p className="text-[#7e7e7e] text-sm md:text-[18px] leading-relaxed max-w-xl mx-auto font-medium">
             {contactData.header.description}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-12 text-left">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-12 text-left max-w-2xl mx-auto">
           {/* Address */}
           <div className="flex gap-6">
             <div className="shrink-0 w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-800">
@@ -36,8 +36,8 @@ export default function ContactPage() {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-medium text-black mb-6">{contactData.address.title}</h3>
-              <div className="text-neutral-500 text-[14px] leading-relaxed space-y-4">
+              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{contactData.address.title}</h3>
+              <div className="text-[#7e7e7e] text-[14px] leading-relaxed space-y-4">
                 <p>
                   {contactData.address.lines[0]}<br />
                   {contactData.address.lines[1]}
@@ -46,9 +46,7 @@ export default function ContactPage() {
                   {contactData.address.lines[2]}<br />
                   {contactData.address.lines[3]}
                 </p>
-                <Link href={contactData.address.directionLink} className="inline-block font-bold text-black underline underline-offset-8 decoration-neutral-300 hover:decoration-black transition-all pt-2 text-[13px]">
-                  Get Direction
-                </Link>
+                
               </div>
             </div>
           </div>
@@ -61,8 +59,8 @@ export default function ContactPage() {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-medium text-black mb-6">{contactData.contact.title}</h3>
-              <div className="text-neutral-500 text-[14px] leading-relaxed space-y-4">
+              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{contactData.contact.title}</h3>
+              <div className="text-[#7e7e7e] text-[14px] leading-relaxed space-y-4">
                 <p>Mobile: <span className="text-black font-medium">{contactData.contact.mobile}</span></p>
                 <p>Hotline: <span className="text-black font-medium">{contactData.contact.hotline}</span></p>
                 <p>E-mail: <span className="text-black font-medium text-[13px]">{contactData.contact.email}</span></p>
@@ -70,32 +68,14 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* Hour of operation */}
-          <div className="flex gap-6">
-            <div className="shrink-0 w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-800">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <div>
-              <h3 className="text-lg md:text-xl font-medium text-black mb-6">{contactData.hours.title}</h3>
-              <div className="text-neutral-500 text-[14px] leading-relaxed">
-                {contactData.hours.items.map((item, index) => (
-                  <div key={index} className={`grid grid-cols-[80px_1fr] gap-4 ${index === 0 ? 'mb-3' : ''}`}>
-                    <span className="font-medium">{item.label}</span>
-                    <span className="text-black">{item.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
+     
         </div>
       </section>
 
       {/* Send A Message Section */}
-      <section className="py-20 md:py-32 bg-white border-t border-neutral-100">
+      <section className="pt-10 pb-26 bg-white border-t border-neutral-100">
         <div className="container max-w-4xl mx-auto">
-          <h2 className="text-3xl md:text-4xl font-medium text-black text-center mb-16">
+          <h2 className="text-3xl md:text-[40px] font-semibold text-black text-center mb-16">
             {contactData.form.title}
           </h2>
 

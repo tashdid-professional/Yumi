@@ -49,42 +49,37 @@ export default function ProductDetailsPage() {
   const activeGallery = selectedVariant ? selectedVariant.gallery : product.gallery;
 
   return (
-    <main className="min-h-screen bg-white">
-     
+    <main className="min-h-screen bg-white  ">
+      {/* Breadcrumb */}
+      <div className="bg-[#F8F8F8] py-4">
+        <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
+          <Link href="/" className="hover:text-black transition-colors">Home</Link>
+          <span className="text-neutral-300">—</span>
+          <Link href="/shop" className="hover:text-black transition-colors">Shop</Link>
+          <span className="text-neutral-300">—</span>
+          <span className="text-black font-medium truncate max-w-[200px]">{product.name}</span>
+        </div>
+      </div>
 
-     
-        <hr className="text-gray-300"></hr>
+      <div className="container pb-16 md:pb-20 pt-10 lg:px-32" >
 
-      <div className="container pb-16 md:pb-20 pt-10">
-        {/* Breadcrumbs */}
-        <nav className="flex items-center gap-2 mb-10 md:mb-14 text-[11px] md:text-xs tracking-[0.1em] uppercase font-medium">
-          <Link href="/" className="text-black hover:text-[#d4b1a4] transition-colors">Home</Link>
-          <span className="text-[#ccc]">/</span>
-          <Link href="/shop" className="text-black hover:text-[#d4b1a4] transition-colors">Shop</Link>
-          <span className="text-[#ccc]">/</span>
-          <span className="text-[#a1a1a1]">{product.name}</span>
-        </nav>
-
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           
           {/* Left: Image Gallery */}
           <div className="flex flex-col gap-6">
             {/* Main Image */}
             <div className="relative aspect-[3/4] w-full max-w-[450px] mx-auto md:mx-0 bg-[#f9e2bf] overflow-hidden">
-              {product.oldPrice && (
-                <div className="absolute top-4 left-4 w-12 h-12 bg-black rounded-full flex items-center justify-center z-20">
-                  <span className="text-white text-xs md:text-[13px] font-bold">
-                    {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+              {product.badge && (
+                <div className={`absolute top-4 left-4 px-4 py-1.5 z-20 rounded-[2px] ${
+                  product.badge === "New" ? "bg-[#c24b3a]" : "bg-[#4b6c5b]"
+                }`}>
+                  <span className="text-white text-[15px] font-bold tracking-widest uppercase">
+                    {product.badge}
                   </span>
                 </div>
               )}
               
               <Image src={mainImage} alt={product.name} fill className="object-cover" priority />
-              {product.badge && (
-                <span className="absolute top-0 right-0 bg-[#f9e2bf] px-6 md:px-8 py-2 text-[10px] md:text-xs font-serif italic tracking-[0.08em] z-10">
-                  {product.badge}
-                </span>
-              )}
             </div>
 
             {/* Thumbnails */}
@@ -92,7 +87,7 @@ export default function ProductDetailsPage() {
               {activeGallery.map((img, idx) => (
                 <div 
                   key={idx}
-                  className={`relative w-16 h-20 md:w-20 md:h-24 flex-shrink-0 cursor-pointer border transition-all ${mainImage === img ? 'border-[#d4b1a4]' : 'border-transparent'}`}
+                  className={`relative w-16 h-20 md:w-26 md:h-32 flex-shrink-0 cursor-pointer border transition-all ${mainImage === img ? 'border-black' : 'border-transparent'}`}
                   onClick={() => setMainImage(img)}
                 >
                   <Image src={img} alt={`Gallery ${idx}`} fill className="object-cover" />
@@ -103,29 +98,29 @@ export default function ProductDetailsPage() {
 
           {/* Right: Product Info */}
           <div className="flex flex-col justify-start max-w-lg">
-            <h1 className="text-3xl md:text-4xl tracking-normal text-black mb-6 font-serif">
+
+             <div className="flex items-center gap-4 mb-6 md:mb-4 ">
+              {product.oldPrice && (
+                <span className=" text-[#999] line-through text-lg md:text-xl font-semibold">
+                  <span className="font-serif ">৳ </span>{product.oldPrice.toFixed(2)}
+                </span>
+              )}
+              <span className=" text-black text-xl font-semibold ">
+                <span className="font-serif ">৳ </span>{product.price.toFixed(2)}
+              </span>
+            </div>
+            <h1 className="text-3xl md:text-[34px] font-semibold tracking-normal text-black mb-6 ">
               {product.name}
             </h1>
             
-            <div className="flex items-center gap-4 mb-6 md:mb-8 font-serif">
-              {product.oldPrice && (
-                <span className="font-serif text-[#999] line-through text-lg md:text-xl">
-                  ${product.oldPrice.toFixed(2)}
-                </span>
-              )}
-              <span className="font-serif text-black text-xl md:text-2xl">
-                ${product.price.toFixed(2)}
-              </span>
-            </div>
+           
 
-            <p className="text-[#a1a1a1] font-sans text-base md:text-[15px] leading-relaxed mb-8 md:mb-10 whitespace-pre-line">
-              {product.description}
-            </p>
+          
 
             {/* Variants / Dynamic Selection */}
             {product.variants && product.variants.length > 0 && (
               <div className="mb-8 md:mb-10">
-                <span className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-black font-semibold block mb-4">
+                <span className="text-[10px] md:text-[14px] tracking-[0.08em] uppercase text-black font-semibold block mb-4">
                   {product.variantType || "Choose Option"}
                 </span>
                 <div className="flex flex-wrap gap-3 md:gap-4">
@@ -133,7 +128,7 @@ export default function ProductDetailsPage() {
                     <button
                       key={idx}
                       onClick={() => setSelectedVariant(variant)}
-                      className={`px-3 md:px-4 py-2 border text-[9px] md:text-[10px] tracking-[0.08em] uppercase transition-all ${
+                      className={`px-3 md:px-4 py-2 border text-[9px] md:text-[13px] tracking-[0.08em] uppercase transition-all ${
                         selectedVariant?.name === variant.name
                           ? "border-black text-black bg-white"
                           : "border-[#eee] text-[#999] hover:border-black hover:text-black"
@@ -152,18 +147,18 @@ export default function ProductDetailsPage() {
                 href={product.purchaseLink || "#"} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="w-full md:w-auto px-12 bg-[#ef4626] border border-[#ef4626] text-white h-14 flex items-center justify-center text-[11px] md:text-xs tracking-[0.08em] uppercase hover:bg-black hover:border-black hover:border hover:text-white transition-all duration-500"
+                className="w-full px-12 bg-black border border-black text-white h-14 flex items-center justify-center text-[11px] md:text-base tracking-[0.08em] e hover:bg-[#4b6c5b]  hover:border-[#4b6c5b] hover:border hover:text-white transition-all duration-500"
               >
-                Purchase
+                Buy it now
               </a>
             </div>
 
             {/* Meta */}
             <div className="space-y-2 pt-6 md:pt-8 border-t border-[#eee]">
-              <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-black font-semibold">
+              <p className="text-[10px] md:text-[14px] tracking-[0.08em] uppercase text-black font-semibold">
                 Category: <span className="font-normal text-[#777] ml-2">{product.category}</span>
               </p>
-              <p className="text-[10px] md:text-[11px] tracking-[0.08em] uppercase text-black font-semibold">
+              <p className="text-[10px] md:text-[14px] tracking-[0.08em] uppercase text-black font-semibold">
                 Tags: <span className="font-normal text-[#777] ml-2">{product.tags.join(", ")}</span>
               </p>
             </div>
@@ -171,24 +166,24 @@ export default function ProductDetailsPage() {
         </div>
 
         {/* Tabs Section */}
-        <div className="mt-12 md:mt-12">
-          <div className="flex flex-wrap justify-start gap-4 mb-2">
+        <div className="mt-12 md:mt-20">
+          <div className="flex flex-wrap justify-center gap-10 md:gap-16 mb-2">
             <button 
               onClick={() => setActiveTab("description")}
-              className={`flex-1 md:flex-none px-6 md:px-8 py-3 text-[10px] md:text-[11px] tracking-[0.08em] uppercase transition-all border ${
+              className={`text-xl md:text-[34px] font-semibold transition-all ${
                 activeTab === 'description' 
-                ? 'text-black border-black' 
-                : 'text-[#a1a1a1] border-[#eee] hover:border-[#ccc]'
+                ? 'text-black' 
+                : 'text-neutral-300 hover:text-black'
               }`}
             >
               Description
             </button>
             <button 
               onClick={() => setActiveTab("videos")}
-              className={`flex-1 md:flex-none px-6 md:px-8 py-3 text-[10px] md:text-[11px] tracking-[0.08em] uppercase transition-all border ${
+              className={`text-xl md:text-[34px] font-semibold transition-all ${
                 activeTab === 'videos' 
-                ? 'text-black border-black' 
-                : 'text-[#a1a1a1] border-[#eee] hover:border-[#ccc]'
+                ? 'text-black' 
+                : 'text-neutral-300 hover:text-black'
               }`}
             >
               Videos
@@ -198,7 +193,7 @@ export default function ProductDetailsPage() {
           <div className="py-8 md:py-12">
             {activeTab === "description" ? (
               <div className="animate-fadeIn">
-                <p className="text-[#a1a1a1] font-serif text-base md:text-lg leading-relaxed">
+                <p className="text-[#a1a1a1] text-base  leading-relaxed font-medium">
                   {product.description}
                 </p>
               </div>
@@ -227,7 +222,7 @@ export default function ProductDetailsPage() {
         {/* Related Products */}
         {relatedProducts.length > 0 && (
           <div className="mt-20">
-            <h2 className="text-[16px] tracking-normal  mb-6 md:mb-6 font-sans font-medium">Related Products</h2>
+            <h2 className="text-[40px] text-center tracking-normal  mb-6 md:mb-10  font-semibold">You May Also Like</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
               {relatedProducts.map((rel) => (
                 <ProductCard key={rel.id} product={rel} />

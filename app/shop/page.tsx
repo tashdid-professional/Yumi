@@ -82,10 +82,18 @@ function ShopContent() {
 
   return (
     <main className="bg-white min-h-screen">
-     
+      {/* Breadcrumb */}
+      <div className="bg-[#F8F8F8] py-4">
+        <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
+          <Link href="/" className="hover:text-black transition-colors">Home</Link>
+          <span className="text-neutral-300">—</span>
+          <span className="text-black font-medium">Products</span>
+        </div>
+      </div>
 
       {/* Main Content Area */}
-      <section className="py-20 container lg:py-24">        {searchBarQuery && (
+      <section className="py-20 container lg:py-24">
+        {searchBarQuery && (
           <div className="mb-10 p-6 bg-neutral-50 border border-neutral-100 flex items-center justify-between">
             <p className="text-black text-[15px]">
               Showing results for <span className="font-bold underline underline-offset-4 decoration-black/20">"{searchBarQuery}"</span>
@@ -93,7 +101,7 @@ function ShopContent() {
             </p>
             <Link 
               href="/shop" 
-              className="text-[12px] font-bold uppercase tracking-widest text-[#ef4626] hover:opacity-70 transition-opacity"
+              className="text-[12px] font-bold uppercase tracking-widest text-[#4b6c5b] hover:opacity-70 transition-opacity"
             >
               Clear Search
             </Link>
@@ -189,7 +197,7 @@ function ShopContent() {
           {/* Sidebar - Desktop Only */}
           <aside className="hidden lg:block lg:w-1/4 space-y-12">
             <div className="sticky top-32">
-              <h4 className="text-[11px] font-bold uppercase tracking-[0.2em] mb-8 text-neutral-900 flex items-center gap-2">
+              <h4 className="text-[17px] font-bold uppercase tracking-[0.2em] mb-8 text-neutral-900 flex items-center gap-2">
                 <span className="w-8 h-[1px] bg-black"></span>
                 Filter By Category
               </h4>
@@ -262,7 +270,7 @@ function ShopContent() {
                     setSortOrder(e.target.value);
                     setCurrentPage(1);
                   }}
-                  className="w-full appearance-none border border-neutral-200 px-5 py-2.5 text-[13px] outline-none focus:border-black transition-colors bg-white pr-10 text-neutral-600 cursor-pointer"
+                  className="w-full bg-[#f3f2f2] appearance-none   px-5 py-2.5 text-[15px] outline-none focus:border-black transition-colors  pr-10  cursor-pointer"
                 >
                   <option value="a-z">Alphabetically, A-Z</option>
                   <option value="z-a">Alphabetically, Z-A</option>
@@ -286,7 +294,7 @@ function ShopContent() {
                 <button
                   onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                   disabled={currentPage === 1}
-                  className="w-11 h-11 border border-neutral-200 flex items-center justify-center text-neutral-400 hover:bg-[#ef4626] hover:text-white hover:border-[#ef4626] transition-all duration-300 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400 disabled:hover:border-neutral-200"
+                  className="w-11 h-11 border border-neutral-200 flex items-center justify-center text-neutral-400 hover:bg-[#4b6c5b] hover:text-white hover:border-[#4b6c5b] transition-all duration-300 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400 disabled:hover:border-neutral-200"
                 >
                   <ChevronLeft size={18} />
                 </button>
@@ -297,8 +305,8 @@ function ShopContent() {
                     onClick={() => handlePageChange(i + 1)}
                     className={`w-11 h-11 border text-[13px] font-bold transition-all duration-300 ${
                       currentPage === i + 1 
-                      ? "bg-[#ef4626] border-[#ef4626] text-white" 
-                      : "border-neutral-200 text-neutral-600 hover:bg-[#ef4626] hover:border-[#ef4626] hover:text-white"
+                      ? "bg-[#4b6c5b] border-[#4b6c5b] text-white" 
+                      : "border-neutral-200 text-neutral-600 hover:bg-[#4b6c5b] hover:border-[#4b6c5b] hover:text-white"
                     }`}
                   >
                     {i + 1}
@@ -308,7 +316,7 @@ function ShopContent() {
                 <button
                   onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                   disabled={currentPage === totalPages}
-                  className="w-11 h-11 border border-neutral-200 flex items-center justify-center text-neutral-400 hover:bg-[#ef4626] hover:text-white hover:border-[#ef4626] transition-all duration-300 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400 disabled:hover:border-neutral-200"
+                  className="w-11 h-11 border border-neutral-200 flex items-center justify-center text-neutral-400 hover:bg-[#4b6c5b] hover:text-white hover:border-[#4b6c5b] transition-all duration-300 disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-neutral-400 disabled:hover:border-neutral-200"
                 >
                   <ChevronRight size={18} />
                 </button>

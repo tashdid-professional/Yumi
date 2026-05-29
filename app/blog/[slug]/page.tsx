@@ -46,7 +46,7 @@ export default function BlogDetailPage() {
           <div className="inline-block bg-[#F5F5F5] px-4 py-1.5 text-[11px] font-bold uppercase tracking-widest text-black mb-6">
             {post.category}
           </div>
-          <h1 className="text-3xl md:text-5xl font-medium text-black mb-8 leading-tight">
+          <h1 className="text-3xl md:text-[40px] font-semibold text-black mb-8 leading-tight">
             {post.title}
           </h1>
           <div className="flex items-center justify-center gap-2 text-[13px] text-neutral-400">
@@ -122,7 +122,7 @@ export default function BlogDetailPage() {
       {/* Related Posts Section */}
       <section className="bg-white py-20 md:py-32 border-t border-neutral-100">
         <div className="container">
-          <h2 className="text-3xl md:text-4xl font-medium text-black text-center mb-16 md:mb-20">
+          <h2 className="text-3xl md:text-[34px] font-semibold text-black text-center mb-16 md:mb-20">
             Related Posts
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
@@ -137,11 +137,14 @@ export default function BlogDetailPage() {
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                   </div>
-                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-2">
+                  <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-3">
                     <span className="group-hover:text-black transition-colors">{rPost.category}</span>
                     <span>|</span>
                     <span>{rPost.date}</span>
                   </div>
+                  <h3 className="text-xl md:text-2xl font-semibold text-black leading-snug group-hover:text-neutral-600 transition-colors">
+                    {rPost.title}
+                  </h3>
                 </article>
               </Link>
             ))}

@@ -19,7 +19,7 @@ export default function BlogPage() {
 
       <section className="py-20 md:py-24 container">
         <div className="text-center mb-16 md:mb-20">
-          <h1 className="text-4xl md:text-5xl font-medium text-black">
+          <h1 className="text-4xl md:text-[40px] font-semibold text-black">
             {blogData.title}
           </h1>
         </div>
@@ -29,7 +29,7 @@ export default function BlogPage() {
           {blogData.posts.map((post) => (
             <Link key={post.id} href={`/blog/${post.slug}`} className="group cursor-pointer">
               <article>
-                <div className="relative mb-8 aspect-square overflow-hidden bg-neutral-100">
+                <div className="relative mb-8 aspect-16/9 overflow-hidden bg-neutral-100">
                   <Image
                     src={post.image}
                     alt={post.title}
@@ -44,7 +44,7 @@ export default function BlogPage() {
                 </div>
 
                 <div className="text-center">
-                  <h2 className="text-xl md:text-2xl font-medium text-black mb-4 group-hover:text-neutral-600 transition-colors leading-snug">
+                  <h2 className="text-xl md:text-2xl font-semibold text-black mb-4 group-hover:text-neutral-600 transition-colors leading-snug">
                     {post.title}
                   </h2>
                   <div className="flex items-center justify-center gap-2 text-[13px] text-neutral-400">

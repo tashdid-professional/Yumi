@@ -37,10 +37,12 @@ export default function ProductCard({ product }: ProductCardProps) {
         <Link href={`/product/${product.slug}`}>
           {/* Image Container */}
           <div className="relative aspect-4/5 bg-[#f7f7f7] flex items-center justify-center mb-6 overflow-hidden group/image">
-            {product.oldPrice && (
-              <div className="absolute top-4 left-4 w-12 h-12 bg-black rounded-full flex items-center justify-center z-10">
-                <span className="text-white text-[13px] font-bold">
-                  {Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100)}%
+            {product.badge && (
+              <div className={`absolute top-4 left-4 px-3 py-1 z-10 rounded-[2px] ${
+                product.badge === "New" ? "bg-[#c24b3a]" : "bg-[#4b6c5b]"
+              }`}>
+                <span className="text-white text-[14px] font-bold tracking-wider">
+                  {product.badge}
                 </span>
               </div>
             )}
@@ -51,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
                 src={product.image}
                 alt={product.name}
                 fill
-                className={`object-cover transition-all duration-1000 ease-in-out ${
+                className={`object-cover  transition-all duration-1000 ease-in-out ${
                   product.gallery?.[1] ? "group-hover/image:opacity-0" : "group-hover/image:scale-110"
                 }`}
               />
@@ -133,6 +135,15 @@ export default function ProductCard({ product }: ProductCardProps) {
 
 
             <div className="w-full md:w-1/2 aspect-4/5 relative bg-[#fcf9f9] shrink-0">
+              {product.badge && (
+                <div className={`absolute top-6 left-6 px-4 py-1.5 z-10 rounded-[2px] ${
+                  product.badge === "New" ? "bg-[#c24b3a]" : "bg-[#4b6c5b]"
+                }`}>
+                  <span className="text-white text-[15px] font-bold tracking-widest uppercase">
+                    {product.badge}
+                  </span>
+                </div>
+              )}
               <Image
                 src={product.image}
                 alt={product.name}

@@ -11,7 +11,7 @@ export interface FooterSection {
 export const footerData = {
   company: {
     title: "Company",
-    description: "Find a location nearest you. See Our Stores",
+    description: "Find a location nearest you.",
     phone: "+391 (0)35 2568 4593",
     email: "hello@domain.com",
     storeLink: "/stores"
@@ -19,18 +19,18 @@ export const footerData = {
   usefulLinks: {
     title: "Useful Links",
     links: [
-      { label: "New Products", href: "/shop/new" },
-      { label: "Best Sellers", href: "/shop/best-sellers" },
-      { label: "Our Blog", href: "/blog" },
-      { label: "Online Gift Card", href: "/gift-cards" },
+      { label: "Home", href: "/" },
+      { label: "Shop", href: "/shop" },
+      { label: "About Us", href: "/about" },
+      { label: "Blogs", href: "/blog" },
+      { label: "Contact", href: "/contact" },
     ]
   },
   information: {
     title: "Infomation",
     links: [
-      { label: "Start A Return", href: "/returns" },
-      { label: "Contact Us", href: "/contact" },
-      { label: "Shipping FAQ", href: "/faq" },
+      
+      { label: "FAQ", href: "/faq" },
       { label: "Terms & Conditions", href: "/terms-conditions" },
       { label: "Privacy Policy", href: "/privacy-policy" },
     ]
@@ -41,8 +41,8 @@ export const footerData = {
     placeholder: "Enter your email address",
     buttonText: "Subscribe"
   },
-  copyright: "© Glowing 2025 | Powered by Shopify",
-  logo: "GLOWING",
+  
+  logo: "YUMI",
   socials: [
     { platform: "instagram", href: "https://instagram.com" },
     { platform: "facebook", href: "https://facebook.com" },

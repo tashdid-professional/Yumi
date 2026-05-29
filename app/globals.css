@@ -1,26 +1,27 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  
+  /* Container Spacing Base */
+  --spacing-container: 1.5rem; 
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Responsive Overrides for the theme variable */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    @media (width >= theme(--breakpoint-md)) {
+      --spacing-container: 3rem;   /* Tablet */
+    }
+    
+    @media (width >= theme(--breakpoint-lg)) {
+      --spacing-container: 5rem;   /* PC Desktop */
+    }
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility container {
+  margin-inline: auto;
+  padding-inline: var(--spacing-container);
+  width: 100%;
+  max-width: 1400px; /* Optional: adds a reasonable max-width for very large screens */
 }

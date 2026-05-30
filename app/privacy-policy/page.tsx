@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { privacyPolicyData } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 export default function PrivacyPolicyPage() {
   return (
@@ -16,7 +17,12 @@ export default function PrivacyPolicyPage() {
         </div>
       </div>
 
-      <section className="py-20 md:py-32 container max-w-4xl mx-auto">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="py-20 md:py-32 container max-w-4xl mx-auto"
+      >
         <div className="text-center mb-16 md:mb-24">
           <h1 className="text-3xl md:text-5xl font-medium text-black mb-6">
             {privacyPolicyData.title}
@@ -42,7 +48,7 @@ export default function PrivacyPolicyPage() {
         <div className="mt-20 pt-10 border-t border-neutral-100 italic text-neutral-400 text-sm">
           If you have any questions about our Privacy Policy, please contact us at hello@grace.com.
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

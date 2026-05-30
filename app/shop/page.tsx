@@ -92,7 +92,12 @@ function ShopContent() {
       </div>
 
       {/* Main Content Area */}
-      <section className="py-20 container lg:py-24">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="py-20 container lg:py-24"
+      >
         {searchBarQuery && (
           <div className="mb-10 p-6 bg-neutral-50 border border-neutral-100 flex items-center justify-between">
             <p className="text-black text-[15px]">
@@ -283,8 +288,20 @@ function ShopContent() {
 
             {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-              {currentProducts.map((product) => (
-                <ProductCard key={product.id} product={product} />
+              {currentProducts.map((product, index) => (
+                <motion.div
+                  key={product.id}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ 
+                    duration: 1.2, 
+                    ease: "easeOut",
+                    delay: (index % 3) * 0.1 // Slight stagger for desktop rows
+                  }}
+                >
+                  <ProductCard product={product} />
+                </motion.div>
               ))}
             </div>
 
@@ -325,7 +342,7 @@ function ShopContent() {
           </div>
 
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

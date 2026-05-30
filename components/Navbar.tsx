@@ -9,7 +9,7 @@ import { siteConfig } from "@/public/datas/homepage";
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  // const isHome = pathname === "/";
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
@@ -31,13 +31,13 @@ export default function Navbar() {
   }, [isMenuOpen]);
 
   return (
-    <header className="relative w-full">
+    <>
       {/* Top Banner - Only on Homepage, Not Sticky */}
-      {isHome && (
+      {/* {isHome && ( */}
         <div className="bg-[#4b6c5b] text-white py-2 text-center text-[10px] sm:text-base font-medium ">
           {siteConfig.topBanner}
         </div>
-      )}
+      {/* )} */}
 
       {/* Main Navbar - Sticky */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
@@ -61,8 +61,8 @@ export default function Navbar() {
               <Link
                 key={link.name}
                 href={link.href}
-                className={`text-[14px] font-semibold tracking-[0.2em] uppercase transition-colors hover:text-gray-500 relative py-1 ${
-                  pathname === link.href ? "after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-black" : ""
+                className={`text-[14px] font-semibold tracking-[0.2em] uppercase transition-colors relative py-1 after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-[1px] after:bg-black after:transition-transform after:duration-300 ${
+                  pathname === link.href ? "after:scale-x-100" : "after:scale-x-0 hover:after:scale-x-100"
                 }`}
               >
                 {link.name}
@@ -151,14 +151,12 @@ export default function Navbar() {
                   ))}
                 </nav>
 
-                <div className="px-8 py-10 text-gray-400 text-sm italic">
-                  {siteConfig.topBanner}
-                </div>
+                
               </motion.div>
             </>
           )}
         </AnimatePresence>
       </nav>
-    </header>
+    </>
   );
 }

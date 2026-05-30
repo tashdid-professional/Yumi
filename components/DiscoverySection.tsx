@@ -1,12 +1,21 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { discoveryData } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 
 const DiscoverySection = () => {
   return (
-    <section className="container py-16 md:py-24 text-center">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+      className="container py-16 md:py-24 text-center"
+    >
       {/* Header */}
       <div className="max-w-2xl mx-auto mb-12 md:mb-16">
         <h2 className="text-3xl md:text-[40px] font-semibold  mb-4">
@@ -53,7 +62,7 @@ const DiscoverySection = () => {
           </div>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

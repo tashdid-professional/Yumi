@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { blogData } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 export default function BlogPage() {
   return (
@@ -17,7 +18,12 @@ export default function BlogPage() {
         </div>
       </div>
 
-      <section className="py-20 md:py-24 container">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="py-20 md:py-24 container"
+      >
         <div className="text-center mb-16 md:mb-20">
           <h1 className="text-4xl md:text-[40px] font-semibold text-black">
             {blogData.title}
@@ -26,35 +32,47 @@ export default function BlogPage() {
 
         {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
-          {blogData.posts.map((post) => (
-            <Link key={post.id} href={`/blog/${post.slug}`} className="group cursor-pointer">
-              <article>
-                <div className="relative mb-8 aspect-16/9 overflow-hidden bg-neutral-100">
-                  <Image
-                    src={post.image}
-                    alt={post.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
-                    <span className="bg-white px-4 py-1 text-[11px] uppercase tracking-wider text-black font-medium whitespace-nowrap shadow-sm">
-                      {post.category}
-                    </span>
+          {blogData.posts.map((post, index) => (
+            <motion.div
+              key={post.id}
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ 
+                duration: 1.2, 
+                ease: "easeOut",
+                delay: (index % 3) * 0.1 
+              }}
+            >
+              <Link href={`/blog/${post.slug}`} className="group cursor-pointer">
+                <article>
+                  <div className="relative mb-8 aspect-16/9 overflow-hidden bg-neutral-100">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute bottom-4 left-1/2 -translate-x-1/2">
+                      <span className="bg-white px-4 py-1 text-[11px] uppercase tracking-wider text-black font-medium whitespace-nowrap shadow-sm">
+                        {post.category}
+                      </span>
+                    </div>
                   </div>
-                </div>
 
-                <div className="text-center">
-                  <h2 className="text-xl md:text-2xl font-semibold text-black mb-4 group-hover:text-neutral-600 transition-colors leading-snug">
-                    {post.title}
-                  </h2>
-                  <div className="flex items-center justify-center gap-2 text-[13px] text-neutral-400">
-                    <span>By <span className="text-black font-medium">{post.author}</span></span>
-                    <span className="text-neutral-300">|</span>
-                    <span>{post.date}</span>
+                  <div className="text-center">
+                    <h2 className="text-xl md:text-2xl font-semibold text-black mb-4 group-hover:text-neutral-600 transition-colors leading-snug">
+                      {post.title}
+                    </h2>
+                    <div className="flex items-center justify-center gap-2 text-[13px] text-neutral-400">
+                      <span>By <span className="text-black font-medium">{post.author}</span></span>
+                      <span className="text-neutral-300">|</span>
+                      <span>{post.date}</span>
+                    </div>
                   </div>
-                </div>
-              </article>
-            </Link>
+                </article>
+              </Link>
+            </motion.div>
           ))}
         </div>
 
@@ -81,7 +99,7 @@ export default function BlogPage() {
             </svg>
           </button>
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { termsConditionsData } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 export default function TermsConditionsPage() {
   return (
@@ -16,7 +17,12 @@ export default function TermsConditionsPage() {
         </div>
       </div>
 
-      <section className="py-20 md:py-32 container max-w-4xl mx-auto">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="py-20 md:py-32 container max-w-4xl mx-auto"
+      >
         <div className="text-center mb-16 md:mb-24">
           <h1 className="text-3xl md:text-5xl font-medium text-black mb-6">
             {termsConditionsData.title}
@@ -38,7 +44,7 @@ export default function TermsConditionsPage() {
             </div>
           ))}
         </div>
-      </section>
+      </motion.section>
     </main>
   );
 }

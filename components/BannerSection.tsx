@@ -1,11 +1,20 @@
+"use client";
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { promoBanners } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 const BannerSection = () => {
   return (
-    <section className="container py-12 md:py-20">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+      className="container py-12 md:py-20"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {promoBanners.map((banner) => (
           <div 
@@ -51,7 +60,7 @@ const BannerSection = () => {
 
       </div>
 
-    </section>
+    </motion.section>
   );
 };
 

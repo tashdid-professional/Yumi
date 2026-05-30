@@ -4,12 +4,19 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { aboutData } from '@/public/datas/about';
+import { motion } from 'framer-motion';
 
 export default function AboutPage() {
   return (
     <main className="bg-white min-h-screen">
       {/* Hero Section */}
-      <section className="relative h-[500px] md:h-[550px] flex items-center overflow-hidden bg-white">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="relative h-[500px] md:h-[550px] flex items-center overflow-hidden bg-white"
+      >
         <div className="container relative z-10 lg:pl-30">
           <div className="max-w-2xl">
              <span className="text-[15px] font-semibold uppercase tracking-[1.5px] text-black mb-8 block opacity-80">
@@ -29,10 +36,16 @@ export default function AboutPage() {
              priority
            />
         </div>
-      </section>
+      </motion.section>
 
       {/* Mission Statement */}
-      <section className="py-32 md:py-42 container text-center">
+      <motion.section 
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+        className="py-32 md:py-42 container text-center"
+      >
          <div className="max-w-4xl mx-auto md:space-y-10">
             <div className="flex justify-center">
                {/* 3-Leaf Organic Icon */}
@@ -51,12 +64,19 @@ export default function AboutPage() {
               </p>
             </div>
          </div>
-      </section>
+      </motion.section>
 
       {/* Grid Sections */}
-      <section className="pb-24 md:pb-44 space-y-20  lg:pl-30">
+      <section className="pb-24 md:pb-44 space-y-20 lg:pl-30">
          {aboutData.sections.map((section) => (
-            <div key={section.id} className="container">
+            <motion.div 
+               key={section.id} 
+               initial={{ opacity: 0, y: 50 }}
+               whileInView={{ opacity: 1, y: 0 }}
+               viewport={{ once: true }}
+               transition={{ duration: 1.2, ease: "easeOut" }}
+               className="container"
+            >
                <div className={`flex flex-col md:flex-row items-center gap-12 `}>
                   <div className={`relative aspect-[5/4] w-full md:w-1/2 overflow-hidden ${section.imagePosition === 'right' ? 'md:order-2' : 'md:order-1'}`}>
                      <Image
@@ -75,7 +95,7 @@ export default function AboutPage() {
                      </p>
                   </div>
                </div>
-            </div>
+            </motion.div>
          ))}
       </section>
     </main>

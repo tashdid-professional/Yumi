@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { products } from "@/public/datas/products";
 import { siteConfig } from "@/public/datas/homepage";
 import ProductCard from "./ProductCard";
+import { motion } from "framer-motion";
 
 export default function FeaturedProducts() {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -42,7 +43,13 @@ export default function FeaturedProducts() {
   }, [totalProducts, visibleItems]);
 
   return (
-    <section className="py-20 md:py-28 bg-white  container">
+    <motion.section 
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 1.2, ease: "easeOut" }}
+      className="py-20 md:py-28 bg-white  container"
+    >
       <div className="  text-center">
         {/* Section Header */}
         <div className="mb-12 md:mb-16">
@@ -75,7 +82,7 @@ export default function FeaturedProducts() {
           </div>
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

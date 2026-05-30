@@ -3,6 +3,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { contactData } from '@/public/datas/homepage';
+import { motion } from 'framer-motion';
 
 export default function ContactPage() {
   return (
@@ -16,8 +17,13 @@ export default function ContactPage() {
         </div>
       </div>
 
-      {/* Keep In Touch Section */}
-      <section className="py-20 md:py-26 container text-center">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeOut" }}
+      >
+        {/* Keep In Touch Section */}
+        <section className="py-20 md:py-26 container text-center">
         <div className="max-w-3xl mx-auto mb-10 ">
           <h1 className="text-3xl md:text-[40px] font-semibold text-black mb-8">
             {contactData.header.title}
@@ -108,6 +114,7 @@ export default function ContactPage() {
           </form>
         </div>
       </section>
-    </main>
+    </motion.div>
+  </main>
   );
 }

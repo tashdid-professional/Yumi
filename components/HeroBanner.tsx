@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 import { heroSlides } from "@/public/datas/homepage";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -37,26 +38,35 @@ export default function HeroBanner() {
           />
           
           <div className="absolute inset-0 flex items-center">
-            <div className="container ">
-              <div className={`max-w-md transition-all duration-1000 ${
-                index === currentSlide ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-10"
-              }`}>
-                <span className="block text-[12px] md:text-[15px] font-semibold tracking-[0.2em]  uppercase mb-4">
-                  {slide.subtitle}
-                </span>
-                <h1 className="text-4xl md:text-6xl lg:text-[56px] font-semibold leading-tight mb-6">
-                  {slide.title}
-                </h1>
-                <p className="text-sm md:text-lg text-[#7e7e7e] mb-10 max-w-[320px] md:max-w-md">
-                  {slide.description}
-                </p>
-                <Link
-                  href={slide.buttonLink}
-                  className="inline-block bg-black text-white px-10 py-4 text-xs md:text-base font-semibold hover:bg-gray-800 transition-colors"
-                >
-                  {slide.buttonText}
-                </Link>
-              </div>
+            <div className="container">
+              <AnimatePresence mode="wait">
+                {index === currentSlide && (
+                  <motion.div
+                    key={slide.id}
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 1.5, ease: "easeOut", delay: 1 }}
+                    className="max-w-md"
+                  >
+                    <span className="block text-[12px] md:text-[15px] font-semibold tracking-[0.2em] uppercase mb-4">
+                      {slide.subtitle}
+                    </span>
+                    <h1 className="text-4xl md:text-6xl lg:text-[56px] font-semibold leading-tight mb-6">
+                      {slide.title}
+                    </h1>
+                    <p className="text-sm md:text-lg text-[#7e7e7e] mb-10 max-w-[320px] md:max-w-md">
+                      {slide.description}
+                    </p>
+                    <Link
+                      href={slide.buttonLink}
+                      className="inline-block bg-black text-white px-10 py-4 text-xs md:text-base font-semibold hover:bg-gray-800 transition-colors"
+                    >
+                      {slide.buttonText}
+                    </Link>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

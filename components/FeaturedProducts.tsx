@@ -32,7 +32,7 @@ export default function FeaturedProducts() {
           const maxIndex = totalProducts - visibleItems;
           return prevIndex >= maxIndex ? 0 : prevIndex + 1;
         });
-      }, 2000);
+      }, 3000);
     } else {
       setCurrentIndex(0);
     }

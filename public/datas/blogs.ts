@@ -99,7 +99,7 @@ export const blogs: Blog[] = [
     title: "Premium feather-light, comfortable lipstick",
     excerpt: "Distinctively reconceptualize resource maximizing methodologies for enterprise strategic theme areas. Energistically revolutionize high standards in e-tailers without principle-centered scenarios. Efficiently evolve B2C solutions vis-a-vis...",
     description: "Experience the ultimate in lip comfort with our new feather-light formula. Designed for all-day wear without drying, this lipstick provides a rich pigment while feeling weightless on your lips. Perfect for both professional settings and casual outings.",
-    image: "https://images.unsplash.com/photo-1586771107445-d3ca88812690?q=80&w=2072&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=207",
   },
   {
     id: 8,
@@ -111,7 +111,7 @@ export const blogs: Blog[] = [
     title: "Long-lasting & quick dry nail polish set",
     excerpt: "Distinctively reconceptualize resource maximizing methodologies for enterprise strategic theme areas. Energistically revolutionize high standards in e-tailers without principle-centered scenarios. Efficiently evolve B2C solutions vis-a-vis...",
     description: "Our quick-dry nail polish set is a game-changer for those on the go. Get salon-quality results at home with a formula that stays chip-free for up to two weeks. Available in a variety of vibrant spring and summer shades.",
-    image: "https://images.unsplash.com/photo-1519014816548-bf5fe059798b?q=80&w=2070&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=208",
   },
   {
     id: 9,
@@ -123,7 +123,7 @@ export const blogs: Blog[] = [
     title: "How to get the perfect glow from within",
     excerpt: "Discover the secrets of internal hydration and the specific vitamins that help your skin shine from the inside out...",
     description: "Skin health starts deep within. In this article, we explore how diet, hydration, and supplements can transform your complexion more than any topical product. We speak with dermatologists to understand the link between gut health and skin clarity.",
-    image: "https://images.unsplash.com/photo-1612817288484-6f916006741a?q=80&w=2070&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=209",
   },
   {
     id: 10,
@@ -135,7 +135,7 @@ export const blogs: Blog[] = [
     title: "The future of sustainable beauty packaging",
     excerpt: "Why we are moving towards 100% recyclable materials and what it means for the beauty industry at large...",
     description: "Packaging waste is a major concern in the cosmetics world. Lily & Lavender is taking steps to ensure all our bottles and jars are made from post-consumer recycled plastic. Read about our journey towards a zero-waste future.",
-    image: "https://images.unsplash.com/photo-1556228578-8c7c2f13-68d?q=80&w=2070&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=210",
   },
   {
     id: 11,
@@ -147,7 +147,7 @@ export const blogs: Blog[] = [
     title: "Why organic ingredients actually matter",
     excerpt: "Breaking down the science behind organic vs synthetic ingredients in your daily skincare routine...",
     description: "Not all natural ingredients are created equal. We look at the certification process for organic farming and why these ingredients are often more potent and less irritating for sensitive skin. Join us as we visit our organic source farms.",
-    image: "https://images.unsplash.com/photo-1540555700478-4be289fbecee?q=80&w=2070&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=211",
   },
   {
     id: 12,
@@ -159,6 +159,18 @@ export const blogs: Blog[] = [
     title: "A 5-minute minimalist makeup routine",
     excerpt: "For the busy soul who wants to look put together without spending hours in front of the mirror every morning...",
     description: "Less is more. We demonstrate how just four multi-purpose products can create a full, polished look. Perfect for travel, gym, or just a lazy Sunday morning. Focus on enhancing your natural features efficiently.",
-    image: "https://images.unsplash.com/photo-1596462502278-27bfdc4033c8?q=80&w=2080&auto=format&fit=crop",
+    image: "https://picsum.photos/1200/800?random=212",
+  },
+  {
+    id: 12,
+    slug: "minimalist-makeup-routine",
+    category: "Routine",
+    author: "Minimalist",
+    day: "10",
+    month: "Oct",
+    title: "A 5-minute minimalist makeup routine",
+    excerpt: "For the busy soul who wants to look put together without spending hours in front of the mirror every morning...",
+    description: "Less is more. We demonstrate how just four multi-purpose products can create a full, polished look. Perfect for travel, gym, or just a lazy Sunday morning. Focus on enhancing your natural features efficiently.",
+    image: "https://picsum.photos/1200/800?random=212",
   },
 ];

@@ -86,20 +86,25 @@ export default function ContactPage() {
           </h2>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <input
                 type="text"
-                placeholder="Name"
+                placeholder={contactData.form.placeholders.name}
                 className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={contactData.form.placeholders.email}
+                className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
+              />
+              <input
+                type="tel"
+                placeholder={contactData.form.placeholders.phone}
                 className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
               />
             </div>
             <textarea
-              placeholder="Message"
+              placeholder={contactData.form.placeholders.message}
               rows={8}
               className="w-full bg-[#f8f8f8] border-none px-6 py-6 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all resize-none"
             />

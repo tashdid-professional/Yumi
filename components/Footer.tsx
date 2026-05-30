@@ -2,7 +2,9 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { footerData } from '@/public/datas/footer';
+import { siteConfig } from '@/public/datas/homepage';
 
 
 
@@ -89,8 +91,14 @@ const Footer = () => {
 
           {/* Center: Logo */}
           <div className="flex-1 flex justify-center order-1 md:order-2">
-            <Link href="/" className="text-[28px] md:text-[42px] font-semibold uppercase tracking-widest">
-              {footerData.logo}
+            <Link href="/" className="inline-block">
+              <Image 
+                src="/images/logo.png" 
+                alt={siteConfig.name} 
+                width={100} 
+                height={40} 
+                className="h-8 md:h-10 w-auto object-contain"
+              />
             </Link>
           </div>
 

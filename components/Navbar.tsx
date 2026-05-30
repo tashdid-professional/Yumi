@@ -12,6 +12,8 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [isVisible, setIsVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
   const router = useRouter();
   const searchInputRef = useRef<HTMLInputElement>(null);
@@ -32,6 +34,25 @@ export default function Navbar() {
       setSearchQuery("");
     }
   };
+
+  // Scroll handler for hiding navbar on scroll down
+  useEffect(() => {
+    const controlNavbar = () => {
+      if (typeof window !== 'undefined') {
+        if (window.scrollY > lastScrollY && window.scrollY > 80) { // scrolling down
+          setIsVisible(false);
+        } else { // scrolling up
+          setIsVisible(true);
+        }
+        setLastScrollY(window.scrollY);
+      }
+    };
+
+    window.addEventListener('scroll', controlNavbar);
+    return () => {
+      window.removeEventListener('scroll', controlNavbar);
+    };
+  }, [lastScrollY]);
 
   // Close menu and search when route changes
   useEffect(() => {
@@ -61,7 +82,7 @@ export default function Navbar() {
       {/* )} */}
 
       {/* Main Navbar - Sticky */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
+      <nav className={`sticky top-0 z-50 bg-white border-b border-gray-100 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="container mx-auto py-5 md:py-4 flex items-center justify-between">
           {/* Mobile: Hamburger Button */}
           <div className="flex md:hidden flex-1">
@@ -93,8 +114,15 @@ export default function Navbar() {
 
           {/* Center: Logo */}
           <div className="flex-1 md:flex-none text-center">
-            <Link href="/" className="text-2xl md:text-[42px] font-semibold uppercase inline-block">
-              {siteConfig.name}
+            <Link href="/" className="inline-block">
+              <Image 
+                src="/images/logo.png" 
+                alt={siteConfig.name} 
+                width={120} 
+                height={50} 
+                className="h-8 md:h-12 w-auto object-contain"
+                priority
+              />
             </Link>
           </div>
 

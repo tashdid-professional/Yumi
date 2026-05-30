@@ -147,6 +147,12 @@ export const contactData = {
   },
   form: {
     title: "Send A Message",
+    placeholders: {
+      name: "Name",
+      email: "Email",
+      phone: "Phone Number",
+      message: "Message"
+    },
     buttonText: "Submit"
   }
 };
@@ -218,72 +224,6 @@ export const faqData = {
           answer: "We offer a 30-day money-back guarantee on all unopened products."
         }
       ]
-    }
-  ]
-};
-
-export const blogData = {
-  title: "Blogs",
-  posts: [
-    {
-      id: 1,
-      slug: "tips-procedure-to-apply-luxury-beauty-cosmetic-cream",
-      title: "Tips & Procedure To Apply Luxury Beauty Cosmetic Cream",
-      category: "Natural Cleansers",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=201",
-      content: "Luxury beauty products require a specific application technique to ensure maximum effectiveness. Start by cleansing your skin thoroughly with a gentle cleanser. Apply a small amount of the cream to your fingertips and warm it up by rubbing them together. Gently press the cream into your skin, starting from the center of your face and moving outwards. Use upward strokes to lift the skin and improve circulation. Don't forget your neck and décolletage, as these areas often show signs of aging first."
-    },
-    {
-      id: 2,
-      slug: "the-best-way-to-select-good-high-end-cosmetic-products",
-      title: "The Best Way To Select Good High-End Cosmetic Products",
-      category: "Cosmetics",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=202",
-      content: "Selecting high-end cosmetic products can be overwhelming given the vast array of options available. The best way to start is by identifying your skin type and specific concerns. Look for products with high-quality, scientifically-proven ingredients. Avoid products with unnecessary fillers or harsh chemicals. It's also helpful to read reviews from reputable sources and, if possible, get samples to test the products on your skin before committing to a full-size purchase."
-    },
-    {
-      id: 3,
-      slug: "lightweight-makeup-to-enhance-your-natural-beauty",
-      title: "Lightweight Makeup To Enhance Your Natural Beauty",
-      category: "Make Up",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=203",
-      content: "Lightweight makeup is perfect for achieving a natural, effortless look. Focus on enhancing your best features rather than masking your skin. Start with a tinted moisturizer or a light-coverage foundation to even out your skin tone while still letting your skin breathe. Use a creamy concealer only where needed. A touch of cream blush on the apples of your cheeks will give you a healthy glow. Finish with a coat of mascara and a tinted lip balm for a fresh, polished finish."
-    },
-    {
-      id: 4,
-      slug: "herbal-ingredients-and-their-role",
-      title: "Herbal Ingredients And Their Role",
-      category: "Natural Cleansers",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=204",
-      content: "Herbal ingredients have been used for centuries in skincare for their healing and nourishing properties. Ingredients like chamomile and calendula are known for their soothing effects, making them ideal for sensitive skin. Green tea is a powerful antioxidant that helps protect the skin from environmental damage. Aloe vera is highly hydrating and can help soothe sunburns and irritations. Understanding the role of different herbal ingredients can help you choose products that best address your skin's needs."
-    },
-    {
-      id: 5,
-      slug: "all-essential-nutrients-your-skin-needs",
-      title: "All Essential Nutrients Your Skin Needs",
-      category: "Natural Cleansers",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=205",
-      content: "Your skin needs a variety of essential nutrients to remain healthy and vibrant. Vitamin C is crucial for collagen production and brightening the skin. Vitamin E is a potent antioxidant that helps protect skin cells from damage. Omega-3 fatty acids help maintain the skin's lipid barrier, keeping it hydrated and plump. Zinc plays a role in wound healing and can help manage acne. A balanced diet rich in these nutrients, along with targeted skincare, will help your skin look its best."
-    },
-    {
-      id: 6,
-      slug: "how-to-find-the-best-brow-shape",
-      title: "How To Find The Best Brow Shape",
-      category: "Make Up",
-      author: "Hiêu Bùi",
-      date: "Jan 10, 2025",
-      image: "https://picsum.photos/800/800?random=206",
-      content: "The right brow shape can frame your face and enhance your features. To find the best shape for you, consider your face shape. For example, those with a round face may benefit from higher, more angular arches to add definition. Those with a square face may find that softer, rounded brows help balance their strong jawline. Use a brow pencil to map out the start, arch, and tail of your brows. Avoid over-plucking and aim for a shape that looks natural and complements your features."
     }
   ]
 };

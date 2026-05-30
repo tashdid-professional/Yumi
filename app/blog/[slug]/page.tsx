@@ -4,12 +4,12 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { blogData } from '@/public/datas/homepage';
+import { blogs } from '@/public/datas/blogs';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
-  const postIndex = blogData.posts.findIndex(p => p.slug === slug);
-  const post = blogData.posts[postIndex];
+  const postIndex = blogs.findIndex(p => p.slug === slug);
+  const post = blogs[postIndex];
 
   if (!post) {
     return (
@@ -20,11 +20,11 @@ export default function BlogDetailPage() {
   }
 
   // Navigation logic
-  const prevPost = postIndex > 0 ? blogData.posts[postIndex - 1] : null;
-  const nextPost = postIndex < blogData.posts.length - 1 ? blogData.posts[postIndex + 1] : null;
+  const prevPost = postIndex > 0 ? blogs[postIndex - 1] : null;
+  const nextPost = postIndex < blogs.length - 1 ? blogs[postIndex + 1] : null;
 
   // Related posts (excluding current)
-  const relatedPosts = blogData.posts
+  const relatedPosts = blogs
     .filter(p => p.id !== post.id)
     .slice(0, 3);
 
@@ -52,7 +52,7 @@ export default function BlogDetailPage() {
           <div className="flex items-center justify-center gap-2 text-[13px] text-neutral-400">
             <span>By <span className="text-black font-medium">{post.author}</span></span>
             <span className="text-neutral-300">|</span>
-            <span>{post.date}</span>
+            <span>{post.month} {post.day}</span>
           </div>
         </div>
 
@@ -68,20 +68,10 @@ export default function BlogDetailPage() {
         </div>
 
         {/* Post Content */}
-        <div className="max-w-3xl mx-auto">
+        <div className="text-justify mx-auto">
           <div className="text-neutral-600 text-base md:text-[17px] leading-relaxed space-y-8">
-            <p>{post.content}</p>
-            <p>
-              Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
-              totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae 
-              dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, 
-              sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.
-            </p>
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum 
-              deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non 
-              provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
-            </p>
+            <p>{post.description}</p>
+            
           </div>
 
           {/* Navigation - Related Posts Links */}
@@ -140,7 +130,7 @@ export default function BlogDetailPage() {
                   <div className="flex items-center gap-2 text-[11px] uppercase tracking-widest font-bold text-neutral-400 mb-3">
                     <span className="group-hover:text-black transition-colors">{rPost.category}</span>
                     <span>|</span>
-                    <span>{rPost.date}</span>
+                    <span>{rPost.month} {rPost.day}</span>
                   </div>
                   <h3 className="text-xl md:text-2xl font-semibold text-black leading-snug group-hover:text-neutral-600 transition-colors">
                     {rPost.title}

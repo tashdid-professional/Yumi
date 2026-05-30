@@ -14,7 +14,7 @@ export default function BlogPage() {
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
           <span className="text-neutral-300">—</span>
-          <span className="text-black font-medium">News</span>
+          <span className="text-black font-medium">Blogs</span>
         </div>
       </div>
 

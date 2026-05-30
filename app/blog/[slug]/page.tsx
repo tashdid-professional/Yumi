@@ -35,7 +35,7 @@ export default function BlogDetailPage() {
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500 overflow-hidden whitespace-nowrap text-ellipsis px-4">
           <Link href="/" className="hover:text-black transition-colors shrink-0">Home</Link>
           <span className="text-neutral-300 shrink-0">—</span>
-          <Link href="/blog" className="hover:text-black transition-colors shrink-0">News</Link>
+          <Link href="/blog" className="hover:text-black transition-colors shrink-0">Blogs</Link>
           <span className="text-neutral-300 shrink-0">—</span>
           <span className="text-black font-medium truncate">{post.title}</span>
         </div>

@@ -223,7 +223,7 @@ export const faqData = {
 };
 
 export const blogData = {
-  title: "News",
+  title: "Blogs",
   posts: [
     {
       id: 1,

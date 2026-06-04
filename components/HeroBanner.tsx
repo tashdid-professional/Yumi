@@ -2,22 +2,35 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Link from "next/link";
-import { heroSlides } from "@/public/datas/homepage";
+import { getHeroSlides } from "@/src/services/api";
+import type { HeroSlide } from "@/src/types";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function HeroBanner() {
+  const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+
+  useEffect(() => {
+    getHeroSlides().then((slides) => {
+      setHeroSlides(slides);
+      setLoading(false);
+    });
+  }, []);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
-  }, []);
+  }, [heroSlides.length]);
 
   useEffect(() => {
+    if (heroSlides.length === 0) return;
     const timer = setInterval(() => {
       nextSlide();
-    }, 5000); // Auto-slide every 5 seconds
+    }, 5000);
     return () => clearInterval(timer);
-  }, [nextSlide]);
+  }, [nextSlide, heroSlides.length]);
+
+  if (loading || heroSlides.length === 0) return null;
 
   return (
     <section className="relative w-full h-[600px] md:h-[700px] lg:h-[800px] overflow-hidden bg-[#f7f7f7]">
@@ -28,15 +41,14 @@ export default function HeroBanner() {
             index === currentSlide ? "opacity-100 z-10" : "opacity-0 z-0"
           }`}
         >
-          {/* Background Image with Overlay */}
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10000ms] ease-linear"
-            style={{ 
+            style={{
               backgroundImage: `url(${slide.backgroundImage})`,
               transform: index === currentSlide ? 'scale(1.1)' : 'scale(1)'
             }}
           />
-          
+
           <div className="absolute inset-0 flex items-center">
             <div className="container">
               <AnimatePresence mode="wait">
@@ -72,7 +84,6 @@ export default function HeroBanner() {
         </div>
       ))}
 
-      {/* Pagination Dots */}
       <div className="absolute bottom-10 left-0 w-full z-20 flex justify-center items-center gap-4">
         {heroSlides.map((_, index) => (
           <button

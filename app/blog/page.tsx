@@ -1,16 +1,22 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { blogs } from '@/public/datas/blogs';
+import { getBlogs } from '@/src/services/api';
+import type { Blog } from '@/src/types';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function BlogPage() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const blogsPerPage = 12;
 
-  // Calculate pagination
+  useEffect(() => {
+    getBlogs().then(setBlogs).finally(() => setLoading(false));
+  }, []);
+
   const indexOfLastBlog = currentPage * blogsPerPage;
   const indexOfFirstBlog = indexOfLastBlog - blogsPerPage;
   const currentBlogs = blogs.slice(indexOfFirstBlog, indexOfLastBlog);
@@ -21,9 +27,16 @@ export default function BlogPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen flex items-center justify-center">
+        <div className="text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">Loading Blogs...</div>
+      </main>
+    );
+  }
+
   return (
     <main className="bg-white min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-[#F8F8F8] py-4">
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
@@ -32,7 +45,7 @@ export default function BlogPage() {
         </div>
       </div>
 
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
@@ -44,7 +57,6 @@ export default function BlogPage() {
           </h1>
         </div>
 
-        {/* Blog Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
           <AnimatePresence mode="wait">
             {currentBlogs.map((post, index) => (
@@ -53,10 +65,10 @@ export default function BlogPage() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
-                transition={{ 
-                  duration: 1.2, 
+                transition={{
+                  duration: 1.2,
                   ease: "easeOut",
-                  delay: (index % 3) * 0.1 
+                  delay: (index % 3) * 0.1
                 }}
               >
                 <Link href={`/blog/${post.slug}`} className="group cursor-pointer">
@@ -92,10 +104,9 @@ export default function BlogPage() {
           </AnimatePresence>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="mt-24 md:mt-32 flex justify-center items-center gap-4">
-            <button 
+            <button
               onClick={() => paginate(Math.max(1, currentPage - 1))}
               disabled={currentPage === 1}
               className={`w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 transition-all ${
@@ -106,15 +117,15 @@ export default function BlogPage() {
                 <polyline points="15 18 9 12 15 6"/>
               </svg>
             </button>
-            
+
             <div className="flex items-center gap-2">
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((number) => (
                 <button
                   key={number}
                   onClick={() => paginate(number)}
                   className={`w-10 h-10 flex items-center justify-center rounded-full text-sm font-medium transition-all ${
-                    currentPage === number 
-                      ? "bg-black text-white" 
+                    currentPage === number
+                      ? "bg-black text-white"
                       : "border border-transparent text-neutral-400 hover:text-black"
                   }`}
                 >
@@ -123,7 +134,7 @@ export default function BlogPage() {
               ))}
             </div>
 
-            <button 
+            <button
               onClick={() => paginate(Math.min(totalPages, currentPage + 1))}
               disabled={currentPage === totalPages}
               className={`w-10 h-10 flex items-center justify-center rounded-full border border-neutral-200 transition-all ${
@@ -140,4 +151,3 @@ export default function BlogPage() {
     </main>
   );
 }
-

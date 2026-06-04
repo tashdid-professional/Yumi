@@ -1,17 +1,28 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { products } from "@/public/datas/products";
-import { siteConfig } from "@/public/datas/homepage";
+import { getFeaturedProducts, getSiteConfig } from "@/src/services/api";
+import type { Product, SiteConfig } from "@/src/types";
 import ProductCard from "./ProductCard";
 import { motion } from "framer-motion";
 
 export default function FeaturedProducts() {
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null);
+  const [loading, setLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleItems, setVisibleItems] = useState(4);
-  const featuredProducts = products.filter((p) => p.featured);
-  const totalProducts = featuredProducts.length;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    Promise.all([getFeaturedProducts(), getSiteConfig()]).then(([products, config]) => {
+      setFeaturedProducts(products);
+      setSiteConfig(config);
+      setLoading(false);
+    });
+  }, []);
+
+  const totalProducts = featuredProducts.length;
 
   useEffect(() => {
     const handleResize = () => {
@@ -42,8 +53,10 @@ export default function FeaturedProducts() {
     };
   }, [totalProducts, visibleItems]);
 
+  if (loading || !siteConfig) return null;
+
   return (
-    <motion.section 
+    <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -51,7 +64,6 @@ export default function FeaturedProducts() {
       className="py-20 md:py-28 bg-white  container"
     >
       <div className="  text-center">
-        {/* Section Header */}
         <div className="mb-12 md:mb-16">
           <h2 className="text-3xl md:text-[40px] font-semibold text-black mb-4">
             {siteConfig.featuredProducts.title}
@@ -61,18 +73,17 @@ export default function FeaturedProducts() {
           </p>
         </div>
 
-        {/* Products Slider */}
         <div className="relative -mx-4 overflow-hidden">
-          <div 
+          <div
             className="flex transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)]"
-            style={{ 
+            style={{
               width: `${(totalProducts / visibleItems) * 100}%`,
-              transform: `translateX(-${(currentIndex * 100) / totalProducts}%)` 
+              transform: `translateX(-${(currentIndex * 100) / totalProducts}%)`
             }}
           >
             {featuredProducts.map((product) => (
-              <div 
-                key={product.id} 
+              <div
+                key={product.id}
                 style={{ width: `${100 / totalProducts}%` }}
                 className="flex-none px-4"
               >
@@ -85,4 +96,3 @@ export default function FeaturedProducts() {
     </motion.section>
   );
 }
-

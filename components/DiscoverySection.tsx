@@ -1,36 +1,42 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { discoveryData } from '@/public/datas/homepage';
+import { getDiscoveryData } from '@/src/services/api';
+import type { DiscoveryData } from '@/src/types';
 import { motion } from 'framer-motion';
 
-
 const DiscoverySection = () => {
+  const [data, setData] = useState<DiscoveryData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getDiscoveryData().then(setData).finally(() => setLoading(false));
+  }, []);
+
+  if (loading || !data) return null;
+
   return (
-    <motion.section 
+    <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 1.2, ease: "easeOut" }}
       className="container py-16 md:py-24 text-center"
     >
-      {/* Header */}
       <div className="max-w-2xl mx-auto mb-12 md:mb-16">
         <h2 className="text-3xl md:text-[40px] font-semibold  mb-4">
-          {discoveryData.heading}
+          {data.heading}
         </h2>
         <p className="text-[#7e7e7e] text-sm md:text-[18px] leading-relaxed px-4">
-          {discoveryData.description}
+          {data.description}
         </p>
       </div>
 
-      {/* Discovery Items */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 text-center">
-        {discoveryData.items.map((item) => (
+        {data.items.map((item) => (
           <div key={item.id} className="group cursor-pointer">
-            {/* Image Wrapper */}
             <Link href={item.linkUrl} className="block overflow-hidden mb-6">
               <div className="relative aspect-[16/9]  overflow-hidden">
                 <Image
@@ -43,7 +49,6 @@ const DiscoverySection = () => {
               </div>
             </Link>
 
-            {/* Content */}
             <div className="flex flex-col items-center">
               <h3 className="text-xl md:text-2xl font-semibold  mb-4">
                 {item.title}
@@ -57,7 +62,6 @@ const DiscoverySection = () => {
                   <path d="M5 12h14M12 5l7 7-7 7"/>
                 </svg>
               </Link>
-
             </div>
           </div>
         ))}

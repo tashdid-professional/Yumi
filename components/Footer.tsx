@@ -1,36 +1,48 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { footerData } from '@/public/datas/footer';
-import { siteConfig } from '@/public/datas/homepage';
-
-
-
+import { getFooterData, getSiteConfig } from '@/src/services/api';
+import type { FooterData, SiteConfig } from '@/src/types';
 
 const Footer = () => {
+  const [footerData, setFooterData] = useState<FooterData | null>(null);
+  const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([getFooterData(), getSiteConfig()]).then(([footer, config]) => {
+      setFooterData(footer);
+      setSiteConfig(config);
+      setLoading(false);
+    });
+  }, []);
+
+  if (loading || !footerData || !siteConfig) {
+    return (
+      <footer className="bg-[#F8F8F8] pt-16 pb-8 md:pt-20 md:pb-12 border-t border-gray-100">
+        <div className="container text-center text-neutral-400">Loading...</div>
+      </footer>
+    );
+  }
+
   return (
     <footer className="bg-[#F8F8F8] pt-16 pb-8 md:pt-20 md:pb-12 border-t border-gray-100">
 
       <div className="container">
-        {/* Top Section */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:gap-0 gap-12 mb-16 md:mb-20">
-          {/* Company */}
           <div className="space-y-6">
             <h4 className="text-[20px] font-semibold ">{footerData.company.title}</h4>
             <div className="space-y-4 text-[#7e7e7e] text-[15px] font-medium">
               <p className="leading-relaxed">
                 Find a location nearest you.
-            
-                
               </p>
               <p className="text-gray-900 font-bold text-[16px]">{footerData.company.phone}</p>
               <p>{footerData.company.email}</p>
             </div>
           </div>
 
-          {/* Useful Links */}
           <div className="space-y-6">
             <h4 className="text-[20px] font-semibold ">{footerData.usefulLinks.title}</h4>
             <ul className="space-y-4">
@@ -44,7 +56,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Information */}
           <div className="space-y-6">
             <h4 className="text-[20px] font-semibold ">{footerData.information.title}</h4>
             <ul className="space-y-4">
@@ -58,7 +69,6 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Newsletter */}
           <div className="space-y-6">
             <h2 className="text-[32px] md:text-[34px] font-semibold  leading-tight">
               {footerData.newsletter.title}
@@ -79,30 +89,26 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
         <div className="flex flex-col md:flex-row items-center justify-between pt-10 border-t border-gray-200 gap-10">
-          
-          {/* Left: Copyright */}
+
           <div className="flex-1 order-2 md:order-1 text-center md:text-left">
             <p className="text-[#7e7e7e] text-[15px] font-medium">
-              © Yumi 2026 | Powered by <a href="https://thebigdogdigital.com/" className="text-[#7e7e7e] hover:text-gray-900 font-bold" target="_blank">BigDog Digital</a>
+              &copy; Yumi 2026 | Powered by <a href="https://thebigdogdigital.com/" className="text-[#7e7e7e] hover:text-gray-900 font-bold" target="_blank">BigDog Digital</a>
             </p>
           </div>
 
-          {/* Center: Logo */}
           <div className="flex-1 flex justify-center order-1 md:order-2">
             <Link href="/" className="inline-block">
-              <Image 
-                src="/images/logo.png" 
-                alt={siteConfig.name} 
-                width={100} 
-                height={40} 
+              <Image
+                src="/images/logo.png"
+                alt={siteConfig.name}
+                width={100}
+                height={40}
                 className="h-8 md:h-10 w-auto object-contain"
               />
             </Link>
           </div>
 
-          {/* Right: Social Links */}
           <div className="flex-1 flex justify-center md:justify-end items-center gap-6 order-3">
             <Link href="https://instagram.com" className="text-gray-900 hover:text-gray-600 transition-colors">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -120,7 +126,7 @@ const Footer = () => {
               </svg>
             </Link>
           </div>
-          
+
         </div>
 
       </div>

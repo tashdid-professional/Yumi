@@ -1,14 +1,31 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { contactData } from '@/public/datas/homepage';
+import { getContactData } from '@/src/services/api';
+import type { ContactData } from '@/src/types';
 import { motion } from 'framer-motion';
 
 export default function ContactPage() {
+  const [data, setData] = useState<ContactData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getContactData().then(setData).finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen flex items-center justify-center">
+        <div className="text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">Loading...</div>
+      </main>
+    );
+  }
+
+  if (!data) return null;
+
   return (
     <main className="bg-white min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-[#F8F8F8] py-4">
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
@@ -22,19 +39,17 @@ export default function ContactPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
       >
-        {/* Keep In Touch Section */}
         <section className="py-20 md:py-26 container text-center">
         <div className="max-w-3xl mx-auto mb-10 ">
           <h1 className="text-3xl md:text-[40px] font-semibold text-black mb-8">
-            {contactData.header.title}
+            {data.header.title}
           </h1>
           <p className="text-[#7e7e7e] text-sm md:text-[18px] leading-relaxed max-w-xl mx-auto font-medium">
-            {contactData.header.description}
+            {data.header.description}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-16 md:gap-12 text-left max-w-2xl mx-auto">
-          {/* Address */}
           <div className="flex gap-6">
             <div className="shrink-0 w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-800">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -42,22 +57,20 @@ export default function ContactPage() {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{contactData.address.title}</h3>
+              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{data.address.title}</h3>
               <div className="text-[#7e7e7e] text-[14px] leading-relaxed space-y-4">
                 <p>
-                  {contactData.address.lines[0]}<br />
-                  {contactData.address.lines[1]}
+                  {data.address.lines[0]}<br />
+                  {data.address.lines[1]}
                 </p>
                 <p>
-                  {contactData.address.lines[2]}<br />
-                  {contactData.address.lines[3]}
+                  {data.address.lines[2]}<br />
+                  {data.address.lines[3]}
                 </p>
-                
               </div>
             </div>
           </div>
 
-          {/* Contact */}
           <div className="flex gap-6">
             <div className="shrink-0 w-12 h-12 rounded-full border border-neutral-200 flex items-center justify-center text-neutral-800">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
@@ -65,46 +78,43 @@ export default function ContactPage() {
               </svg>
             </div>
             <div>
-              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{contactData.contact.title}</h3>
+              <h3 className="text-lg md:text-xl font-semibold text-black mb-6">{data.contact.title}</h3>
               <div className="text-[#7e7e7e] text-[14px] leading-relaxed space-y-4">
-                <p>Mobile: <span className="text-black font-medium">{contactData.contact.mobile}</span></p>
-                <p>Hotline: <span className="text-black font-medium">{contactData.contact.hotline}</span></p>
-                <p>E-mail: <span className="text-black font-medium text-[13px]">{contactData.contact.email}</span></p>
+                <p>Mobile: <span className="text-black font-medium">{data.contact.mobile}</span></p>
+                <p>Hotline: <span className="text-black font-medium">{data.contact.hotline}</span></p>
+                <p>E-mail: <span className="text-black font-medium text-[13px]">{data.contact.email}</span></p>
               </div>
             </div>
           </div>
-
-     
         </div>
       </section>
 
-      {/* Send A Message Section */}
       <section className="pt-10 pb-26 bg-white border-t border-neutral-100">
         <div className="container max-w-4xl mx-auto">
           <h2 className="text-3xl md:text-[40px] font-semibold text-black text-center mb-16">
-            {contactData.form.title}
+            {data.form.title}
           </h2>
 
           <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <input
                 type="text"
-                placeholder={contactData.form.placeholders.name}
+                placeholder={data.form.placeholders.name}
                 className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
               />
               <input
                 type="email"
-                placeholder={contactData.form.placeholders.email}
+                placeholder={data.form.placeholders.email}
                 className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
               />
               <input
                 type="tel"
-                placeholder={contactData.form.placeholders.phone}
+                placeholder={data.form.placeholders.phone}
                 className="w-full bg-[#f8f8f8] border-none px-6 py-4 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all"
               />
             </div>
             <textarea
-              placeholder={contactData.form.placeholders.message}
+              placeholder={data.form.placeholders.message}
               rows={8}
               className="w-full bg-[#f8f8f8] border-none px-6 py-6 text-[14px] outline-none focus:ring-1 focus:ring-neutral-200 transition-all resize-none"
             />
@@ -113,7 +123,7 @@ export default function ContactPage() {
                 type="submit"
                 className="bg-black text-white px-12 py-4 text-[14px] font-bold uppercase tracking-[0.2em] hover:bg-neutral-800 transition-all active:scale-95"
               >
-                {contactData.form.buttonText}
+                {data.form.buttonText}
               </button>
             </div>
           </form>

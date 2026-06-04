@@ -1,10 +1,11 @@
 ﻿"use client";
 
-import React, { useState, Suspense } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronRight, LayoutGrid, List, ChevronDown, Plus, ChevronLeft, X } from "lucide-react";
-import { products } from "@/public/datas/products";
+import { getProducts } from "@/src/services/api";
+import type { Product } from "@/src/types";
 import ProductCard from "@/components/ProductCard";
 
 import { useSearchParams } from "next/navigation";
@@ -14,31 +15,36 @@ function ShopContent() {
   const searchParams = useSearchParams();
   const searchBarQuery = searchParams.get("search") || "";
   const categoryParam = searchParams.get("category");
-  
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getProducts().then(setProducts).finally(() => setLoading(false));
+  }, []);
+
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(categoryParam);
   const [sortOrder, setSortOrder] = useState<string>("a-z");
 
-  // Sync state with URL parameter if it changes
   React.useEffect(() => {
     setSelectedCategory(categoryParam);
     setCurrentPage(1);
   }, [categoryParam]);
-  
+
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const productsPerPage = 9; // 3 rows * 3 columns on desktop
-  // Filter products by search and category
+  const productsPerPage = 9;
+
   const filteredProducts = products.filter(p => {
     const matchesCategory = selectedCategory ? p.category === selectedCategory : true;
-    const matchesSearch = searchBarQuery 
-      ? p.name.toLowerCase().includes(searchBarQuery.toLowerCase()) || 
+    const matchesSearch = searchBarQuery
+      ? p.name.toLowerCase().includes(searchBarQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchBarQuery.toLowerCase())
       : true;
     return matchesCategory && matchesSearch;
   });
 
-  // Apply Sorting
   const sortedProducts = [...filteredProducts].sort((a, b) => {
     switch (sortOrder) {
       case "a-z":
@@ -54,7 +60,6 @@ function ShopContent() {
     }
   });
 
-  // Pagination logic
   const totalPages = Math.ceil(sortedProducts.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -67,22 +72,28 @@ function ShopContent() {
 
   const handleCategorySelect = (category: string | null) => {
     setSelectedCategory(category);
-    setCurrentPage(1); // Reset to first page when filtering
-    setIsSidebarOpen(false); // Close sidebar on mobile after selection
+    setCurrentPage(1);
+    setIsSidebarOpen(false);
     window.scrollTo({ top: 400, behavior: "smooth" });
   };
-  
-  // Extract unique categories and their counts
+
   const categories = Array.from(new Set(products.map(p => p.category))).map(cat => ({
     name: cat,
     count: products.filter(p => p.category === cat).length
   }));
 
-  const bannerCategories = ["Face", "Hair Styling", "Lips", "Skincare"];
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen">
+        <div className="h-screen w-full flex items-center justify-center text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">
+          Loading Products...
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="bg-white min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-[#F8F8F8] py-4">
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
@@ -91,8 +102,7 @@ function ShopContent() {
         </div>
       </div>
 
-      {/* Main Content Area */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
@@ -104,20 +114,19 @@ function ShopContent() {
               Showing results for <span className="font-bold underline underline-offset-4 decoration-black/20">"{searchBarQuery}"</span>
               <span className="text-neutral-400 ml-2">({filteredProducts.length} items found)</span>
             </p>
-            <Link 
-              href="/shop" 
+            <Link
+              href="/shop"
               className="text-[12px] font-bold uppercase tracking-widest text-[#4b6c5b] hover:opacity-70 transition-opacity"
             >
               Clear Search
             </Link>
           </div>
-        )}        
+        )}
 
         <div className=" mx-auto flex flex-col lg:flex-row gap-12 relative lg:static">
-          
-          {/* Mobile Sticky Toggle Button */}
+
           <div className="lg:hidden fixed left-0 top-1/2 -translate-y-1/2 z-40">
-            <button 
+            <button
               onClick={() => setIsSidebarOpen(true)}
               className="bg-black text-white py-6 px-2.5 rounded-r-lg shadow-2xl flex flex-col items-center gap-3 active:scale-95 transition-all group"
             >
@@ -131,14 +140,14 @@ function ShopContent() {
           <AnimatePresence>
             {isSidebarOpen && (
               <>
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   exit={{ opacity: 0 }}
                   onClick={() => setIsSidebarOpen(false)}
                   className="fixed inset-0 bg-black/40 z-[90] lg:hidden"
                 />
-                <motion.aside 
+                <motion.aside
                   initial={{ x: "-100%" }}
                   animate={{ x: 0 }}
                   exit={{ x: "-100%" }}
@@ -153,9 +162,9 @@ function ShopContent() {
                       <X size={20} />
                     </button>
                   </div>
-                  
+
                   <ul className="space-y-2 overflow-y-auto">
-                    <li 
+                    <li
                       onClick={() => handleCategorySelect(null)}
                       className={`flex items-center justify-between px-4 py-3.5 cursor-pointer rounded-sm transition-all ${
                         selectedCategory === null ? "bg-[#f8f8f8]" : "active:bg-neutral-50"
@@ -165,16 +174,16 @@ function ShopContent() {
                         All Collections
                       </span>
                       <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
-                        selectedCategory === null 
-                        ? "bg-black border-black text-white" 
+                        selectedCategory === null
+                        ? "bg-black border-black text-white"
                         : "border-neutral-200 text-neutral-400"
                       }`}>
                         {products.length}
                       </span>
                     </li>
                     {categories.map((cat) => (
-                      <li 
-                        key={cat.name} 
+                      <li
+                        key={cat.name}
                         onClick={() => handleCategorySelect(cat.name)}
                         className={`flex items-center justify-between px-4 py-3.5 cursor-pointer rounded-sm transition-all ${
                           selectedCategory === cat.name ? "bg-[#f8f8f8]" : "active:bg-neutral-50"
@@ -184,8 +193,8 @@ function ShopContent() {
                           {cat.name}
                         </span>
                         <span className={`text-[10px] px-2 py-0.5 rounded-full border ${
-                          selectedCategory === cat.name 
-                          ? "bg-black border-black text-white" 
+                          selectedCategory === cat.name
+                          ? "bg-black border-black text-white"
                           : "border-neutral-200 text-neutral-400"
                         }`}>
                           {cat.count}
@@ -193,13 +202,11 @@ function ShopContent() {
                       </li>
                     ))}
                   </ul>
-
                 </motion.aside>
               </>
             )}
           </AnimatePresence>
 
-          {/* Sidebar - Desktop Only */}
           <aside className="hidden lg:block lg:w-1/4 space-y-12">
             <div className="sticky top-32">
               <h4 className="text-[17px] font-bold uppercase tracking-[0.2em] mb-8 text-neutral-900 flex items-center gap-2">
@@ -207,11 +214,11 @@ function ShopContent() {
                 Filter By Category
               </h4>
               <ul className="space-y-1">
-                <li 
+                <li
                   onClick={() => handleCategorySelect(null)}
                   className={`flex items-center justify-between px-4 py-3 cursor-pointer rounded-sm transition-all duration-300 group ${
-                    selectedCategory === null 
-                    ? "bg-[#f8f8f8] translate-x-1" 
+                    selectedCategory === null
+                    ? "bg-[#f8f8f8] translate-x-1"
                     : "hover:bg-[#fafafa] hover:translate-x-1"
                   }`}
                 >
@@ -219,20 +226,20 @@ function ShopContent() {
                     All Collections
                   </span>
                   <span className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${
-                    selectedCategory === null 
-                    ? "bg-black border-black text-white" 
+                    selectedCategory === null
+                    ? "bg-black border-black text-white"
                     : "bg-transparent border-neutral-200 text-neutral-400 group-hover:border-black group-hover:text-black"
                   }`}>
                     {products.length}
                   </span>
                 </li>
                 {categories.map((cat) => (
-                  <li 
-                    key={cat.name} 
+                  <li
+                    key={cat.name}
                     onClick={() => handleCategorySelect(cat.name)}
                     className={`flex items-center justify-between px-4 py-3 cursor-pointer rounded-sm transition-all duration-300 group ${
-                      selectedCategory === cat.name 
-                      ? "bg-[#f8f8f8] translate-x-1" 
+                      selectedCategory === cat.name
+                      ? "bg-[#f8f8f8] translate-x-1"
                       : "hover:bg-[#fafafa] hover:translate-x-1"
                     }`}
                   >
@@ -240,8 +247,8 @@ function ShopContent() {
                       {cat.name}
                     </span>
                     <span className={`text-[10px] px-2 py-0.5 rounded-full border transition-all ${
-                      selectedCategory === cat.name 
-                      ? "bg-black border-black text-white" 
+                      selectedCategory === cat.name
+                      ? "bg-black border-black text-white"
                       : "bg-transparent border-neutral-200 text-neutral-400 group-hover:border-black group-hover:text-black"
                     }`}>
                       {cat.count}
@@ -252,24 +259,21 @@ function ShopContent() {
             </div>
           </aside>
 
-
-          {/* Product Grid Area */}
           <div className="w-full lg:w-3/4">
-            
-            {/* Filter Bar */}
+
             <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
               <div className="flex items-center">
-                <button 
+                <button
                   onClick={() => setViewType("grid")}
                   className={`border border-neutral-200 p-2.5 transition-colors ${viewType === "grid" ? "bg-[#f8f8f8] text-black" : "text-neutral-400 hover:text-black"}`}
                 >
                   <LayoutGrid size={18} />
                 </button>
-               
+
               </div>
 
               <div className="relative w-full md:w-auto min-w-[220px]">
-                <select 
+                <select
                   value={sortOrder}
                   onChange={(e) => {
                     setSortOrder(e.target.value);
@@ -286,7 +290,6 @@ function ShopContent() {
               </div>
             </div>
 
-            {/* Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
               {currentProducts.map((product, index) => (
                 <motion.div
@@ -294,10 +297,10 @@ function ShopContent() {
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
-                  transition={{ 
-                    duration: 1.2, 
+                  transition={{
+                    duration: 1.2,
                     ease: "easeOut",
-                    delay: (index % 3) * 0.1 // Slight stagger for desktop rows
+                    delay: (index % 3) * 0.1
                   }}
                 >
                   <ProductCard product={product} />
@@ -305,7 +308,6 @@ function ShopContent() {
               ))}
             </div>
 
-            {/* Pagination */}
             {totalPages > 1 && (
               <div className="mt-20 flex items-center justify-center gap-2">
                 <button
@@ -315,14 +317,14 @@ function ShopContent() {
                 >
                   <ChevronLeft size={18} />
                 </button>
-                
+
                 {[...Array(totalPages)].map((_, i) => (
                   <button
                     key={i + 1}
                     onClick={() => handlePageChange(i + 1)}
                     className={`w-11 h-11 border text-[13px] font-bold transition-all duration-300 ${
-                      currentPage === i + 1 
-                      ? "bg-[#4b6c5b] border-[#4b6c5b] text-white" 
+                      currentPage === i + 1
+                      ? "bg-[#4b6c5b] border-[#4b6c5b] text-white"
                       : "border-neutral-200 text-neutral-600 hover:bg-[#4b6c5b] hover:border-[#4b6c5b] hover:text-white"
                     }`}
                   >

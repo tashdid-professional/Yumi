@@ -5,10 +5,13 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { siteConfig } from "@/public/datas/homepage";
-import { products } from "@/public/datas/products";
+import { getSiteConfig, getProducts } from "@/src/services/api";
+import type { SiteConfig, Product } from "@/src/types";
 
 export default function Navbar() {
+  const [siteConfig, setSiteConfig] = useState<SiteConfig | null>(null);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [configLoading, setConfigLoading] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,6 +20,14 @@ export default function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
   const searchInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    getSiteConfig().then((config) => {
+      setSiteConfig(config);
+      setConfigLoading(false);
+    });
+    getProducts().then(setProducts);
+  }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleSearch = () => {
@@ -35,13 +46,12 @@ export default function Navbar() {
     }
   };
 
-  // Scroll handler for hiding navbar on scroll down
   useEffect(() => {
     const controlNavbar = () => {
       if (typeof window !== 'undefined') {
-        if (window.scrollY > lastScrollY && window.scrollY > 80) { // scrolling down
+        if (window.scrollY > lastScrollY && window.scrollY > 80) {
           setIsVisible(false);
-        } else { // scrolling up
+        } else {
           setIsVisible(true);
         }
         setLastScrollY(window.scrollY);
@@ -54,13 +64,11 @@ export default function Navbar() {
     };
   }, [lastScrollY]);
 
-  // Close menu and search when route changes
   useEffect(() => {
     setIsMenuOpen(false);
     setIsSearchOpen(false);
   }, [pathname]);
 
-  // Disable scroll when menu or search is open
   useEffect(() => {
     if (isMenuOpen || isSearchOpen) {
       document.body.style.overflow = "hidden";
@@ -72,21 +80,37 @@ export default function Navbar() {
     };
   }, [isMenuOpen, isSearchOpen]);
 
+  if (configLoading || !siteConfig) {
+    return (
+      <nav className="sticky top-0 z-50 bg-white border-b border-gray-100">
+        <div className="container mx-auto py-5 md:py-4 flex items-center justify-between">
+          <div className="flex-1" />
+          <div className="flex-1 md:flex-none text-center">
+            <Image
+              src="/images/logo.png"
+              alt="Yumi"
+              width={120}
+              height={50}
+              className="h-8 md:h-12 w-auto object-contain"
+              priority
+            />
+          </div>
+          <div className="flex-1" />
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <>
-      {/* Top Banner - Only on Homepage, Not Sticky */}
-      {/* {isHome && ( */}
-        <div className="bg-[#4b6c5b] text-white py-2 text-center text-[10px] sm:text-base font-medium ">
-          {siteConfig.topBanner}
-        </div>
-      {/* )} */}
+      <div className="bg-[#4b6c5b] text-white py-2 text-center text-[10px] sm:text-base font-medium ">
+        {siteConfig.topBanner}
+      </div>
 
-      {/* Main Navbar - Sticky */}
       <nav className={`sticky top-0 z-50 bg-white border-b border-gray-100 transition-transform duration-300 ${isVisible ? 'translate-y-0' : '-translate-y-full'}`}>
         <div className="container mx-auto py-5 md:py-4 flex items-center justify-between">
-          {/* Mobile: Hamburger Button */}
           <div className="flex md:hidden flex-1">
-            <button 
+            <button
               onClick={toggleMenu}
               aria-label="Toggle Menu"
               className="text-black p-1 active:scale-95 transition-transform"
@@ -97,7 +121,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Left: Desktop Navigation Menu */}
           <div className="hidden md:flex flex-1 gap-8 lg:gap-12">
             {siteConfig.navLinks.map((link) => (
               <Link
@@ -112,25 +135,23 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Center: Logo */}
           <div className="flex-1 md:flex-none text-center">
             <Link href="/" className="inline-block">
-              <Image 
-                src="/images/logo.png" 
-                alt={siteConfig.name} 
-                width={120} 
-                height={50} 
+              <Image
+                src="/images/logo.png"
+                alt={siteConfig.name}
+                width={120}
+                height={50}
                 className="h-8 md:h-12 w-auto object-contain"
                 priority
               />
             </Link>
           </div>
 
-          {/* Right: Search Only */}
           <div className="flex-1 flex justify-end">
-            <button 
+            <button
               onClick={toggleSearch}
-              aria-label="Search" 
+              aria-label="Search"
               className="hover:text-gray-400 transition-colors"
             >
               <svg
@@ -152,7 +173,6 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Search Overlay - Moved outside sticky nav to avoid transform issues */}
       <AnimatePresence>
         {isSearchOpen && (
           <>
@@ -174,7 +194,7 @@ export default function Navbar() {
               <div className="container mx-auto">
                 <div className="flex justify-between items-start mb-8">
                   <h2 className="text-[10px] font-bold uppercase tracking-[0.2em] text-neutral-400">Search Products</h2>
-                  <button 
+                  <button
                     onClick={toggleSearch}
                     className="p-2 hover:rotate-90 transition-transform duration-300"
                   >
@@ -183,7 +203,7 @@ export default function Navbar() {
                     </svg>
                   </button>
                 </div>
-                
+
                 <form onSubmit={handleSearch} className="relative mb-12">
                   <input
                     ref={searchInputRef}
@@ -196,26 +216,25 @@ export default function Navbar() {
                   <div className="absolute right-0 bottom-2 w-full h-[2px] bg-neutral-100 origin-left scale-x-100 transition-transform duration-700 mt-4" />
                 </form>
 
-                {/* Suggestion / Quick Results */}
                 {searchQuery.trim().length > 0 && (
                   <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {products
-                      .filter(p => 
-                        p.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                      .filter(p =>
+                        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                         p.category.toLowerCase().includes(searchQuery.toLowerCase())
                       )
                       .slice(0, 4)
                       .map(product => (
-                        <Link 
+                        <Link
                           key={product.id}
                           href={`/product/${product.slug}`}
                           onClick={() => setIsSearchOpen(false)}
                           className="group flex flex-col gap-4"
                         >
                           <div className="relative aspect-[4/5] overflow-hidden bg-neutral-50">
-                            <Image 
-                              src={product.image} 
-                              alt={product.name} 
+                            <Image
+                              src={product.image}
+                              alt={product.name}
                               fill
                               className="object-cover transition-transform duration-700 group-hover:scale-105"
                             />
@@ -235,7 +254,7 @@ export default function Navbar() {
 
                 {searchQuery.trim().length > 0 && (
                    <div className="mt-12 pb-8 text-center">
-                      <button 
+                      <button
                         onClick={handleSearch}
                         className="text-[11px] font-bold uppercase tracking-[0.2em] underline underline-offset-8 decoration-neutral-200 hover:decoration-black transition-all"
                       >
@@ -249,11 +268,9 @@ export default function Navbar() {
         )}
       </AnimatePresence>
 
-      {/* Mobile Menu Drawer - Moved outside sticky nav to avoid transform issues */}
       <AnimatePresence>
         {isMenuOpen && (
           <>
-            {/* Backdrop */}
             <motion.div
               key="mobile-backdrop"
               initial={{ opacity: 0 }}
@@ -263,7 +280,6 @@ export default function Navbar() {
               className="fixed inset-0 bg-black/60 backdrop-blur-md z-[100] md:hidden"
             />
 
-            {/* Drawer Content */}
             <motion.div
               key="mobile-drawer"
               initial={{ x: "-100%" }}
@@ -274,7 +290,7 @@ export default function Navbar() {
             >
               <div className="flex items-center justify-between px-6 py-6 border-b border-gray-50">
                 <span className="text-xl font-bold tracking-[0.2em] uppercase">Menu</span>
-                <button 
+                <button
                   onClick={toggleMenu}
                   className="p-1 hover:bg-gray-100 rounded-full transition-colors"
                 >
@@ -283,7 +299,7 @@ export default function Navbar() {
                   </svg>
                 </button>
               </div>
-              
+
               <nav className="flex-grow pt-10 px-8 space-y-8">
                 {siteConfig.navLinks.map((link, idx) => (
                   <motion.div

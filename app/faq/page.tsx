@@ -1,20 +1,36 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { faqData } from '@/public/datas/homepage';
+import { getFAQData } from '@/src/services/api';
+import type { FAQData } from '@/src/types';
 import { motion } from 'framer-motion';
 
 export default function FAQPage() {
+  const [data, setData] = useState<FAQData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [openIndex, setOpenIndex] = useState<number | null>(1);
+
+  useEffect(() => {
+    getFAQData().then(setData).finally(() => setLoading(false));
+  }, []);
 
   const toggleAccordion = (id: number) => {
     setOpenIndex(openIndex === id ? null : id);
   };
 
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen flex items-center justify-center">
+        <div className="text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">Loading...</div>
+      </main>
+    );
+  }
+
+  if (!data) return null;
+
   return (
     <main className="bg-white min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-[#F8F8F8] py-4">
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500">
           <Link href="/" className="hover:text-black transition-colors">Home</Link>
@@ -23,7 +39,7 @@ export default function FAQPage() {
         </div>
       </div>
 
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1.2, ease: "easeOut" }}
@@ -31,15 +47,15 @@ export default function FAQPage() {
       >
         <div className="text-center mb-16 md:mb-24">
           <h1 className="text-3xl md:text-5xl font-medium text-black mb-6">
-            {faqData.title}
+            {data.title}
           </h1>
           <p className="text-neutral-500 text-sm md:text-base leading-relaxed max-w-xl mx-auto">
-            {faqData.description}
+            {data.description}
           </p>
         </div>
 
         <div className="space-y-16">
-          {faqData.categories.map((category, catIndex) => (
+          {data.categories.map((category, catIndex) => (
             <div key={catIndex} className="space-y-8">
               <h2 className="text-xl md:text-2xl font-medium text-black border-b border-neutral-100 pb-4">
                 {category.name}

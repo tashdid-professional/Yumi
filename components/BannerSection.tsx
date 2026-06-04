@@ -1,14 +1,24 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { promoBanners } from '@/public/datas/homepage';
+import { getPromoBanners } from '@/src/services/api';
+import type { PromoBanner } from '@/src/types';
 import { motion } from 'framer-motion';
 
 const BannerSection = () => {
+  const [promoBanners, setPromoBanners] = useState<PromoBanner[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getPromoBanners().then(setPromoBanners).finally(() => setLoading(false));
+  }, []);
+
+  if (loading || promoBanners.length === 0) return null;
+
   return (
-    <motion.section 
+    <motion.section
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -17,11 +27,10 @@ const BannerSection = () => {
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {promoBanners.map((banner) => (
-          <div 
-            key={banner.id} 
+          <div
+            key={banner.id}
             className="relative min-h-[400px] md:min-h-[480px] flex items-center overflow-hidden group"
           >
-            {/* Background Image */}
             <Image
               src={banner.image}
               alt={banner.title}
@@ -30,10 +39,8 @@ const BannerSection = () => {
               sizes="(max-width: 768px) 100vw, 50vw"
             />
 
-            {/* Optional Overlay to maintain brand color and readability */}
             <div className={`absolute inset-0 ${banner.bgColor} opacity-20 group-hover:opacity-10 transition-opacity duration-700`} />
 
-            {/* Content Container */}
             <div className="relative z-10 w-full md:w-[75%] p-8 md:p-14">
               {banner.subtitle && (
                 <span className="block text-[12px] md:text-[15px] font-semibold tracking-[1.5px] uppercase mb-4 drop-shadow-sm">

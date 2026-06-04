@@ -1,13 +1,29 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { blogs } from '@/public/datas/blogs';
+import { getBlogs } from '@/src/services/api';
+import type { Blog } from '@/src/types';
 
 export default function BlogDetailPage() {
   const { slug } = useParams();
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getBlogs().then(setBlogs).finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">Loading...</div>
+      </div>
+    );
+  }
+
   const postIndex = blogs.findIndex(p => p.slug === slug);
   const post = blogs[postIndex];
 
@@ -19,18 +35,15 @@ export default function BlogDetailPage() {
     );
   }
 
-  // Navigation logic
   const prevPost = postIndex > 0 ? blogs[postIndex - 1] : null;
   const nextPost = postIndex < blogs.length - 1 ? blogs[postIndex + 1] : null;
 
-  // Related posts (excluding current)
   const relatedPosts = blogs
     .filter(p => p.id !== post.id)
     .slice(0, 3);
 
   return (
     <main className="bg-white min-h-screen">
-      {/* Breadcrumb */}
       <div className="bg-[#F8F8F8] py-4">
         <div className="container flex items-center justify-center gap-2 text-[12px] uppercase tracking-[0.1em] text-neutral-500 overflow-hidden whitespace-nowrap text-ellipsis px-4">
           <Link href="/" className="hover:text-black transition-colors shrink-0">Home</Link>
@@ -56,7 +69,6 @@ export default function BlogDetailPage() {
           </div>
         </div>
 
-        {/* Featured Image */}
         <div className="relative aspect-[16/9] mb-12 md:mb-16 overflow-hidden">
           <Image
             src={post.image}
@@ -67,14 +79,11 @@ export default function BlogDetailPage() {
           />
         </div>
 
-        {/* Post Content */}
         <div className="text-justify mx-auto">
           <div className="text-neutral-600 text-base md:text-[17px] leading-relaxed space-y-8">
             <p>{post.description}</p>
-            
           </div>
 
-          {/* Navigation - Related Posts Links */}
           <div className="mt-20 py-10 border-t border-b border-neutral-100 flex flex-col md:flex-row justify-between gap-10">
             {prevPost && (
               <Link href={`/blog/${prevPost.slug}`} className="flex items-center gap-6 group max-w-xs transition-all">
@@ -89,7 +98,7 @@ export default function BlogDetailPage() {
                 </div>
               </Link>
             )}
-            
+
             <div className="flex-1 hidden md:block" />
 
             {nextPost && (
@@ -109,7 +118,6 @@ export default function BlogDetailPage() {
         </div>
       </article>
 
-      {/* Related Posts Section */}
       <section className="bg-white py-20 md:py-32 border-t border-neutral-100">
         <div className="container">
           <h2 className="text-3xl md:text-[34px] font-semibold text-black text-center mb-16 md:mb-20">

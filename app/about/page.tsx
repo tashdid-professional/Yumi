@@ -1,16 +1,33 @@
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { aboutData } from '@/public/datas/about';
+import { getAboutData } from '@/src/services/api';
+import type { AboutData } from '@/src/types';
 import { motion } from 'framer-motion';
 
 export default function AboutPage() {
+  const [data, setData] = useState<AboutData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getAboutData().then(setData).finally(() => setLoading(false));
+  }, []);
+
+  if (loading) {
+    return (
+      <main className="bg-white min-h-screen flex items-center justify-center">
+        <div className="text-black font-serif text-2xl animate-pulse uppercase tracking-[0.2em]">Loading...</div>
+      </main>
+    );
+  }
+
+  if (!data) return null;
+
   return (
     <main className="bg-white min-h-screen">
-      {/* Hero Section */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -20,16 +37,16 @@ export default function AboutPage() {
         <div className="container relative z-10 lg:pl-30">
           <div className="max-w-2xl">
              <span className="text-[15px] font-semibold uppercase tracking-[1.5px] text-black mb-8 block opacity-80">
-                {aboutData.hero.subtitle}
+                {data.hero.subtitle}
              </span>
              <h1 className="text-5xl md:text-[56px] font-semibold text-black leading-[1.1] tracking-tight">
-                {aboutData.hero.title}
+                {data.hero.title}
              </h1>
           </div>
         </div>
         <div className="absolute inset-0 w-full h-full pointer-events-none">
            <Image
-             src={aboutData.hero.backgroundImage}
+             src={data.hero.backgroundImage}
              alt="About Hero"
              fill
              className="object-cover md:object-right opacity-90"
@@ -38,8 +55,7 @@ export default function AboutPage() {
         </div>
       </motion.section>
 
-      {/* Mission Statement */}
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
@@ -48,7 +64,6 @@ export default function AboutPage() {
       >
          <div className="max-w-4xl mx-auto md:space-y-10">
             <div className="flex justify-center">
-               {/* 3-Leaf Organic Icon */}
                <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M30 10C30 10 24 20 24 28C24 34 28 38 30 38C32 38 36 34 36 28C36 20 30 10 30 10Z" fill="#A8BCA1"/>
                   <path d="M18 25C18 25 12 33 12 40C12 45 15 48 18 48C21 48 24 45 24 40C24 33 18 25 18 25Z" fill="#A8BCA1" opacity="0.5"/>
@@ -56,21 +71,20 @@ export default function AboutPage() {
                </svg>
             </div>
             <h2 className="text-3xl md:text-[34px] font-semibold text-black leading-[1.2] max-w-xl mx-auto px-4">
-               {aboutData.missionStatement.title}
+               {data.missionStatement.title}
             </h2>
             <div className="max-w-2xl mx-auto">
               <p className="text-[#7e7e7e] font-medium text-[15px] md:text-[17px] leading-relaxed px-4 md:px-0 opacity-90">
-                 {aboutData.missionStatement.description}
+                 {data.missionStatement.description}
               </p>
             </div>
          </div>
       </motion.section>
 
-      {/* Grid Sections */}
       <section className="pb-24 md:pb-44 space-y-20 lg:pl-30">
-         {aboutData.sections.map((section) => (
-            <motion.div 
-               key={section.id} 
+         {data.sections.map((section) => (
+            <motion.div
+               key={section.id}
                initial={{ opacity: 0, y: 50 }}
                whileInView={{ opacity: 1, y: 0 }}
                viewport={{ once: true }}

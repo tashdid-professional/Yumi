@@ -61,9 +61,9 @@ export default function ProductDetailsPage() {
     );
   }
 
-  const relatedProducts = products
-    .filter((p) => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
+  const otherCategories = products.filter((p) => p.category !== product.category && p.id !== product.id);
+  const shuffled = otherCategories.sort(() => 0.5 - Math.random());
+  const relatedProducts = shuffled.slice(0, 4);
 
   const activeGallery = selectedVariant ? selectedVariant.gallery : product.gallery;
 

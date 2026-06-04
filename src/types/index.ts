@@ -21,6 +21,7 @@ export interface HeroSlide {
   buttonText: string;
   buttonLink: string;
   backgroundImage: string;
+  mobileImage?: string;
 }
 
 export interface PromoBanner {

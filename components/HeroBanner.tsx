@@ -10,12 +10,20 @@ export default function HeroBanner() {
   const [heroSlides, setHeroSlides] = useState<HeroSlide[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     getHeroSlides().then((slides) => {
       setHeroSlides(slides);
       setLoading(false);
     });
+  }, []);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const nextSlide = useCallback(() => {
@@ -44,7 +52,7 @@ export default function HeroBanner() {
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-[10000ms] ease-linear"
             style={{
-              backgroundImage: `url(${slide.backgroundImage})`,
+              backgroundImage: `url(${isMobile && slide.mobileImage ? slide.mobileImage : slide.backgroundImage})`,
               transform: index === currentSlide ? 'scale(1.1)' : 'scale(1)'
             }}
           />

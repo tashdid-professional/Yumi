@@ -22,6 +22,7 @@ export interface HeroSlide {
   buttonText: string;
   buttonLink: string;
   backgroundImage: string;
+  mobileImage?: string;
 }
 
 export const heroSlides: HeroSlide[] = [
@@ -32,7 +33,8 @@ export const heroSlides: HeroSlide[] = [
     description: "Made using clean, non-toxic ingredients, our products are designed for everyone.",
     buttonText: "Shop Now",
     buttonLink: "/shop",
-    backgroundImage: "https://picsum.photos/1920/1080?random=101", 
+    backgroundImage: "https://picsum.photos/1920/1080?random=101",
+    mobileImage: "https://picsum.photos/600/900?random=101",
   },
   {
     id: 2,
@@ -42,6 +44,7 @@ export const heroSlides: HeroSlide[] = [
     buttonText: "Explore Now",
     buttonLink: "/shop",
     backgroundImage: "https://picsum.photos/1920/1080?random=102",
+    mobileImage: "https://picsum.photos/600/900?random=102",
   },
   {
     id: 3,
@@ -51,6 +54,7 @@ export const heroSlides: HeroSlide[] = [
     buttonText: "Shop Sale",
     buttonLink: "/shop",
     backgroundImage: "https://picsum.photos/1920/1080?random=103",
+    mobileImage: "https://picsum.photos/600/900?random=103",
   },
 ];
 
